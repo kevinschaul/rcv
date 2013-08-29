@@ -13,21 +13,9 @@ window.data = [
       from: 2,
       to: 2
     }, {
-      votes: 1,
-      from: 3,
-      to: 2
-    }, {
       votes: 4,
       from: 4,
       to: 4
-    }, {
-      votes: 1,
-      from: 5,
-      to: 1
-    }, {
-      votes: 1,
-      from: 6,
-      to: 16
     }, {
       votes: 2,
       from: 7,
@@ -37,29 +25,17 @@ window.data = [
       from: 8,
       to: 8
     }, {
-      votes: 1,
-      from: 9,
-      to: 16
-    }, {
       votes: 2,
       from: 10,
       to: 10
     }, {
-      votes: 6,
+      votes: 7,
       from: 11,
       to: 11
-    }, {
-      votes: 1,
-      from: 12,
-      to: 16
     }, {
       votes: 2,
       from: 13,
       to: 13
-    }, {
-      votes: 1,
-      from: 14,
-      to: 11
     }, {
       votes: 3,
       from: 15,
@@ -69,22 +45,180 @@ window.data = [
       from: 16,
       to: 16
     }, {
-      votes: 1,
-      from: 13,
-      to: 13
-    }, {
-      votes: 1,
-      from: 18,
-      to: 13
-    }, {
-      votes: 1,
-      from: 19,
-      to: 19
-    }, {
       votes: 2,
       from: 19,
       to: 19
-   }
+    }, {
+      votes: 1,
+      from: 3,
+      to: 8
+    }, {
+      votes: 1,
+      from: 5,
+      to: 1
+    }, {
+      votes: 1,
+      from: 6,
+      to: 2
+    }, {
+      votes: 1,
+      from: 9,
+      to: 16
+    }, {
+      votes: 1,
+      from: 12,
+      to: 1
+    }, {
+      votes: 1,
+      from: 14,
+      to: 16
+    }, {
+      votes: 1,
+      from: 17,
+      to: 1
+    }, {
+      votes: 1,
+      from: 18,
+      to: 16
+    }
+  ], [
+    {
+      votes: 3,
+      from: 0,
+      to: 0
+    }, {
+      votes: 25,
+      from: 1,
+      to: 1
+    }, {
+      votes: 4,
+      from: 2,
+      to: 2
+    }, {
+      votes: 4,
+      from: 4,
+      to: 4
+    }, {
+      votes: 18,
+      from: 8,
+      to: 8
+    }, {
+      votes: 7,
+      from: 11,
+      to: 11
+    }, {
+      votes: 3,
+      from: 15,
+      to: 15
+    }, {
+      votes: 28,
+      from: 16,
+      to: 16
+    }, {
+      votes: 2,
+      from: 7,
+      to: 16
+    }, {
+      votes: 1,
+      from: 10,
+      to: 1
+    }, {
+      votes: 1,
+      from: 10,
+      to: 16
+    }, {
+      votes: 2,
+      from: 13,
+      to: 16
+    }, {
+      votes: 2,
+      from: 19,
+      to: 16
+    }
+  ], [
+    {
+      votes: 3,
+      from: 0,
+      to: 0
+    }, {
+      votes: 26,
+      from: 1,
+      to: 1
+    }, {
+      votes: 4,
+      from: 2,
+      to: 2
+    }, {
+      votes: 5,
+      from: 4,
+      to: 4
+    }, {
+      votes: 18,
+      from: 8,
+      to: 8
+    }, {
+      votes: 7,
+      from: 11,
+      to: 11
+    }, {
+      votes: 3,
+      from: 15,
+      to: 15
+    }, {
+      votes: 28,
+      from: 16,
+      to: 16
+    }
+  ], [
+    {
+      votes: 27,
+      from: 1,
+      to: 1
+    }, {
+      votes: 5,
+      from: 2,
+      to: 2
+    }, {
+      votes: 5,
+      from: 4,
+      to: 4
+    }, {
+      votes: 19,
+      from: 8,
+      to: 8
+    }, {
+      votes: 7,
+      from: 11,
+      to: 11
+    }, {
+      votes: 37,
+      from: 16,
+      to: 16
+    }
+  ], [
+    {
+      votes: 30,
+      from: 1,
+      to: 1
+    }, {
+      votes: 28,
+      from: 8,
+      to: 8
+    }, {
+      votes: 42,
+      from: 16,
+      to: 16
+    }
+  ], [
+    {
+      votes: 43,
+      from: 1,
+      to: 1
+    }, {
+      votes: 57,
+      from: 16,
+      to: 16
+    }
   ],
   []
 ];

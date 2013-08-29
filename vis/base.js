@@ -1,10 +1,10 @@
 var margin = { top: 10, right: 10, bottom: 10, left: 60 };
 var width = 960 - margin.left - margin.right;
-var height = 500 - margin.top - margin.bottom;
+var height = 1300 - margin.top - margin.bottom;
 
 var svg = d3.select('.target').append('svg')
   .attr('width', 960)
-  .attr('height', 800)
+  .attr('height', 1300)
     .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
@@ -18,7 +18,7 @@ _.each(data[0], function(d) {
 });
 console.log(totalVotes);
 
-var numberOfRounds = 2;
+var numberOfRounds = 6;
 var numberOfCandidates = 20;
 var hPadding = 4;
 var vPadding = 200;
@@ -96,51 +96,51 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
   cumulativeVotes = resetCumulativeVotes();
 
   enter.append('path')
-      .attr('class', 'vote-line')
-      .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
-      .attr('d', function(d) {
-        var lineData = [];
-        var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.from]), roundIndex * vPadding];
-        var endPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.from]), roundIndex * vPadding + rowHeight];
+    .attr('class', 'vote-line')
+    .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
+    .attr('d', function(d) {
+      var lineData = [];
+      var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.from]), roundIndex * vPadding];
+      var endPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.from]), roundIndex * vPadding + rowHeight];
 
-        lineData.push(beginPoint);
-        lineData.push(endPoint);
+      lineData.push(beginPoint);
+      lineData.push(endPoint);
 
-        cumulativeVotes[d.from] += d.votes / totalVotes;
+      cumulativeVotes[d.from] += d.votes / totalVotes;
 
-        return line(lineData);
-      })
-      .attr('transform', function(d) {
-        return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
-      });
+      return line(lineData);
+    })
+    .attr('transform', function(d) {
+      return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
+    });
 
   cumulativeVotes = resetCumulativeVotes();
 
   enter.append('path')
-      .attr('class', 'vote-line')
-      .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
-      .attr('d', function(d) {
-        var lineData = [];
-        var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.from]), roundIndex * vPadding + rowHeight];
-        var endPoint = [(d.to * candidateWidth) + x(cumulativeVotes[d.to]), (roundIndex + 1) * vPadding];
+    .attr('class', 'vote-line')
+    .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
+    .attr('d', function(d) {
+      var lineData = [];
+      var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.from]), roundIndex * vPadding + rowHeight];
+      var endPoint = [(d.to * candidateWidth) + x(cumulativeVotes[d.to]), (roundIndex + 1) * vPadding];
 
-        var midPoint = [(beginPoint[0] + endPoint[0]) / 2, (beginPoint[1] + endPoint[1]) / 2];
-        var preMidPoint = [beginPoint[0], beginPoint[1] + (vPadding / 3)];
-        var postMidPoint = [endPoint[0], endPoint[1] - (vPadding / 3)];
+      var midPoint = [(beginPoint[0] + endPoint[0]) / 2, (beginPoint[1] + endPoint[1]) / 2];
+      var preMidPoint = [beginPoint[0], beginPoint[1] + (vPadding / 3)];
+      var postMidPoint = [endPoint[0], endPoint[1] - (vPadding / 3)];
 
-        lineData.push(beginPoint);
-        lineData.push(preMidPoint);
-        lineData.push(midPoint);
-        lineData.push(postMidPoint);
-        lineData.push(endPoint);
+      lineData.push(beginPoint);
+      lineData.push(preMidPoint);
+      lineData.push(midPoint);
+      lineData.push(postMidPoint);
+      lineData.push(endPoint);
 
-        cumulativeVotes[d.from] += d.votes / totalVotes;
+      cumulativeVotes[d.from] += d.votes / totalVotes;
 
-        return line(lineData);
-      })
-      .attr('transform', function(d) {
-        return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
-      })
+      return line(lineData);
+    })
+    .attr('transform', function(d) {
+      return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
+    })
 
     if (roundIndex === numberOfRounds - 2) {
       cumulativeVotes = resetCumulativeVotes();
