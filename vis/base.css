@@ -16,3 +16,9 @@
   shape-rendering: crispEdges;
 }
 
+.vote-line {
+  fill: none;
+  stroke: #ccc;
+  stroke-opacity: 0.5;
+}
+
