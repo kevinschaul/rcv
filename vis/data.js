@@ -15,7 +15,7 @@ window.data = [
     }, {
       votes: 1,
       from: 3,
-      to: 3
+      to: 2
     }, {
       votes: 4,
       from: 4,
@@ -23,11 +23,11 @@ window.data = [
     }, {
       votes: 1,
       from: 5,
-      to: 5
+      to: 1
     }, {
       votes: 1,
       from: 6,
-      to: 6
+      to: 16
     }, {
       votes: 2,
       from: 7,
@@ -39,7 +39,7 @@ window.data = [
     }, {
       votes: 1,
       from: 9,
-      to: 9
+      to: 16
     }, {
       votes: 2,
       from: 10,
@@ -51,7 +51,7 @@ window.data = [
     }, {
       votes: 1,
       from: 12,
-      to: 12
+      to: 16
     }, {
       votes: 2,
       from: 13,
@@ -59,7 +59,7 @@ window.data = [
     }, {
       votes: 1,
       from: 14,
-      to: 14
+      to: 11
     }, {
       votes: 3,
       from: 15,
@@ -70,12 +70,12 @@ window.data = [
       to: 16
     }, {
       votes: 1,
-      from: 17,
-      to: 17
+      from: 13,
+      to: 13
     }, {
       votes: 1,
       from: 18,
-      to: 18
+      to: 13
     }, {
       votes: 1,
       from: 19,
