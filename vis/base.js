@@ -9,13 +9,37 @@ var svg = d3.select('.target').append('svg')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
 var data = [
-  [30, [0, 0, 0]],
-  [5, [1, 0, 0]],
-  [2, [1, 2, 2]],
-  [2, [1, 3, 2]],
-  [20, [2, 2, 2]],
-  [15, [3, 3, 0]],
-  [10, [3, 3, 2]]
+  {
+    round: 0,
+    votes: 30,
+    from: 0,
+    to: 0
+  }, {
+    round: 0,
+    votes: 5,
+    from: 1,
+    to: 0
+  }, {
+    round: 0,
+    votes: 5,
+    from: 1,
+    to: 2
+  }, {
+    round: 0,
+    votes: 2,
+    from: 1,
+    to: 3
+  }, {
+    round: 0,
+    votes: 20,
+    from: 2,
+    to: 2
+  }, {
+    round: 0,
+    votes: 15,
+    from: 3,
+    to: 3
+  }
 ];
 
 console.log(data);
@@ -28,21 +52,7 @@ var candidateWidth = width / (numberOfCandidates);
 
 var cumulativeVotes = [0, 0, 0, 0];
 
-var x = d3.scale.linear()
-  .domain([0, 50])
-  .range([0, width / numberOfCandidates])
-
-var line = d3.svg.line()
-  .x(function(d, i) {
-    console.log(i);
-    cumulativeVotes[d.candidate] += d.width;
-    console.log(cumulativeVotes);
-    return d.candidate * candidateWidth;
-  })
-  .y(function(d, i) {
-    return i * vPadding;
-  })
-
+// Draw boxes
 _.each(_.range(0, numberOfRounds), function(roundIndex) {
   _.each(_.range(0, numberOfCandidates), function(i) {
     svg.append('rect')
@@ -54,19 +64,41 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
   });
 });
 
+var x = d3.scale.linear()
+  .domain([0, 50])
+  .range([0, width / numberOfCandidates])
+
+var line = d3.svg.line()
+  .x(function(d, i) {
+    return d[0];
+  })
+  .y(function(d, i) {
+    return d[1];
+  })
+  .interpolate('basis')
+
 svg.selectAll('path')
     .data(data)
   .enter().append('path')
     .attr('class', 'vote-line')
-    .style('stroke-width', function(d) { return x(d[0]); })
+    .style('stroke-width', function(d) { return x(d.votes); })
     .attr('d', function(d) {
       var lineData = [];
-      for (var i = 0; i < d[1].length; i++) {
-        lineData.push({
-          width: d[0],
-          candidate: d[1][i]
-        });
-      }
+      var beginPoint = [d.from * candidateWidth, d.round * vPadding];
+      var endPoint = [d.to * candidateWidth, (d.round + 1) * vPadding];
+
+      var midPoint = [(beginPoint[0] + endPoint[0]) / 2, (beginPoint[1] + endPoint[1]) / 2];
+      var preMidPoint = [beginPoint[0], beginPoint[1] + (vPadding / 3)];
+      var postMidPoint = [endPoint[0], endPoint[1] - (vPadding / 3)];
+
+      lineData.push(beginPoint);
+      lineData.push(preMidPoint);
+      lineData.push(midPoint);
+      lineData.push(postMidPoint);
+      lineData.push(endPoint);
+
+      console.log(lineData);
+
       return line(lineData);
     })
 
