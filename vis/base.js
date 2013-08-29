@@ -11,61 +11,50 @@ var svg = d3.select('.target').append('svg')
 var data = [
   [
     {
-      round: 0,
       votes: 30,
       from: 0,
       to: 0
     }, {
-      round: 0,
       votes: 20,
       from: 2,
       to: 2
     }, {
-      round: 0,
       votes: 15,
       from: 3,
       to: 3
     }, {
-      round: 0,
       votes: 5,
       from: 1,
       to: 0
     }, {
-      round: 0,
       votes: 5,
       from: 1,
       to: 2
     }, {
-      round: 0,
       votes: 2,
       from: 1,
       to: 3
     }
   ], [
     {
-      round: 1, // TODO remove round property
       votes: 35,
       from: 0,
       to: 0
     }, {
-      round: 1,
       votes: 25,
       from: 2,
       to: 2
     }, {
-      round: 1,
       votes: 10,
       from: 3,
       to: 0
     }, {
-      round: 1,
       votes: 7,
       from: 3,
       to: 2
     }
   ], [
     {
-      round: 2,
       votes: 45,
       from: 0,
       to: 0
@@ -75,29 +64,38 @@ var data = [
 
 console.log(data);
 
+var totalVotes = 77;
 var numberOfRounds = 3;
 var numberOfCandidates = 4;
-var hPadding = 0; // TODO
+var hPadding = 100;
 var vPadding = 200;
+var rowHeight = 30;
 var candidateWidth = width / (numberOfCandidates);
 
 var cumulativeVotes = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+
+var x = d3.scale.linear()
+  .domain([0, 1])
+  .range([0, (width / numberOfCandidates - hPadding)]);
 
 // Draw boxes
 _.each(_.range(0, numberOfRounds), function(roundIndex) {
   _.each(_.range(0, numberOfCandidates), function(i) {
     svg.append('rect')
       .attr('class', 'guide')
-      .attr('x', function(d) { return (i * (width / numberOfCandidates)) + (hPadding / 2); })
-      .attr('y', function(d) { return roundIndex * vPadding; })
+      .attr('x', (i * (width / numberOfCandidates)) + (hPadding / 2))
+      .attr('y', roundIndex * vPadding)
       .attr('width', (width / numberOfCandidates) - hPadding)
-      .attr('height', 30);
+      .attr('height', rowHeight);
+
+    svg.append('line')
+      .attr('class', 'threshold')
+      .attr('x1', (i * (width / numberOfCandidates)) + (hPadding / 2) + x(.5))
+      .attr('x2', (i * (width / numberOfCandidates)) + (hPadding / 2) + x(.5))
+      .attr('y1', roundIndex * vPadding)
+      .attr('y2', (roundIndex * vPadding) + rowHeight);
   });
 });
-
-var x = d3.scale.linear()
-  .domain([0, 50])
-  .range([0, width / numberOfCandidates]);
 
 var line = d3.svg.line()
   .x(function(d, i) {
@@ -115,11 +113,11 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
       .data(data[roundIndex])
     .enter().append('path')
       .attr('class', 'vote-line')
-      .style('stroke-width', function(d) { return x(d.votes); })
+      .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
       .attr('d', function(d) {
         var lineData = [];
-        var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.round][d.from]), d.round * vPadding];
-        var endPoint = [(d.to * candidateWidth) + x(cumulativeVotes[d.round][d.to]), (d.round + 1) * vPadding];
+        var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotes[roundIndex][d.from]), roundIndex * vPadding];
+        var endPoint = [(d.to * candidateWidth) + x(cumulativeVotes[roundIndex][d.to]), (roundIndex + 1) * vPadding];
 
         var midPoint = [(beginPoint[0] + endPoint[0]) / 2, (beginPoint[1] + endPoint[1]) / 2];
         var preMidPoint = [beginPoint[0], beginPoint[1] + (vPadding / 3)];
@@ -131,12 +129,12 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
         lineData.push(postMidPoint);
         lineData.push(endPoint);
 
-        cumulativeVotes[d.round][d.from] += d.votes;
+        cumulativeVotes[roundIndex][d.from] += d.votes / totalVotes;
 
         return line(lineData);
       })
       .attr('transform', function(d) {
-        return 'translate(' + (x(d.votes) / 2) + ',0)';
+        return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
       });
 });
 
