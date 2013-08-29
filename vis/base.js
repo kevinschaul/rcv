@@ -1,4 +1,4 @@
-var margin = { top: 10, right: 10, bottom: 10, left: 10 };
+var margin = { top: 10, right: 10, bottom: 10, left: 30 };
 var width = 960 - margin.left - margin.right;
 var height = 500 - margin.top - margin.bottom;
 
@@ -80,6 +80,12 @@ var x = d3.scale.linear()
 
 // Draw boxes
 _.each(_.range(0, numberOfRounds), function(roundIndex) {
+  svg.append('text')
+    .attr('class', 'label')
+    .attr('x', -(margin.left) + 10)
+    .attr('y', (roundIndex * vPadding) + (rowHeight / 2) + 5)
+    .text('Round ' + (roundIndex + 1))
+
   _.each(_.range(0, numberOfCandidates), function(i) {
     svg.append('rect')
       .attr('class', 'guide')

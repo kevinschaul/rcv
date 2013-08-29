@@ -4,25 +4,29 @@
 }
 
 .graphic h1 {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   font-size: 27px;
   color: #333;
 }
 
+.label {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  fill: #333;
+  stroke: none;
+}
 .guide {
   fill: none;
   stroke: #999;
   stroke-width: 1px;
   shape-rendering: crispEdges;
 }
-
 .threshold {
   fill: none;
   stroke: #999;
   stroke-width: 1px;
   shape-rendering: crispEdges;
 }
-
 .vote-line {
   fill: none;
   stroke: #58794F;
