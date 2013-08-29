@@ -14,19 +14,19 @@
 }
 
 .candidates {
-  margin-left: 28px;
+  margin-left: 59px;
 }
 .candidate {
   float: left;
-  margin: 0 50px;
-  width: 130px;
+  margin: 0 2.3px;
+  width: 40px;
   text-align: center;
   font-family: Georgia, serif;
   font-size: 13px;
   color: #333;
 }
 .candidate img {
-  max-width: 80px;
+  max-width: 30px;
   padding: 2px;
   opacity: 0.2;
 }
