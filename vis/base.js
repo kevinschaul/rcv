@@ -29,11 +29,14 @@ var candidateWidth = width / (numberOfCandidates);
 var cumulativeVotes = [0, 0, 0, 0];
 
 var x = d3.scale.linear()
-  .domain([0, 100])
+  .domain([0, 50])
   .range([0, width / numberOfCandidates])
 
 var line = d3.svg.line()
-  .x(function(d) {
+  .x(function(d, i) {
+    console.log(i);
+    cumulativeVotes[d.candidate] += d.width;
+    console.log(cumulativeVotes);
     return d.candidate * candidateWidth;
   })
   .y(function(d, i) {
@@ -55,8 +58,8 @@ svg.selectAll('path')
     .data(data)
   .enter().append('path')
     .attr('class', 'vote-line')
-    .style('stroke-width', function(d) { return d[0]; })
-    .attr('d', function(d, i) {
+    .style('stroke-width', function(d) { return x(d[0]); })
+    .attr('d', function(d) {
       var lineData = [];
       for (var i = 0; i < d[1].length; i++) {
         lineData.push({
