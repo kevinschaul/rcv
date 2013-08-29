@@ -1,3 +1,7 @@
+.clear {
+  clear: both;
+}
+
 .graphic {
   width: 960px;
   margin: auto;
@@ -9,12 +13,42 @@
   color: #333;
 }
 
+.candidates {
+  margin-left: 28px;
+}
+.candidate {
+  float: left;
+  margin: 0 50px;
+  width: 130px;
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  color: #333;
+}
+.candidate img {
+  max-width: 80px;
+  padding: 2px;
+  opacity: 0.2;
+}
+
 .label {
   font-family: Arial, sans-serif;
   font-size: 13px;
   fill: #333;
   stroke: none;
 }
+.annotation {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  fill: #666;
+  stroke: none;
+}
+.leader-line {
+  stroke: #666;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+}
+
 .guide {
   fill: none;
   stroke: #999;

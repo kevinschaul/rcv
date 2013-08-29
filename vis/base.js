@@ -200,3 +200,25 @@ d3.selectAll('.vote-line')
     console.log(d);
   });
 
+var annotations = svg.append('g')
+  .attr('class', 'annotations')
+
+annotations.append('line')
+  .attr('class', 'leader-line')
+  .attr('x1', (hPadding / 2) + x(.5))
+  .attr('x2', (hPadding / 2) + x(.5))
+  .attr('y1', rowHeight + 4)
+  .attr('y2', rowHeight + 18)
+
+annotations.append('text')
+  .attr('class', 'annotation')
+  .attr('x', (hPadding / 2) + x(.5) - 6)
+  .attr('y', rowHeight + 30)
+  .text('Threshold to win')
+
+annotations.append('text')
+  .attr('class', 'annotation')
+  .attr('x', (hPadding / 2) + x(.5) - 6)
+  .attr('y', rowHeight + 44)
+  .text('(50 percent plus one vote)')
+
