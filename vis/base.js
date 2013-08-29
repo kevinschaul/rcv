@@ -67,6 +67,7 @@ var vPadding = 200;
 var rowHeight = 30;
 var candidateWidth = width / (numberOfCandidates);
 
+var candidatesInContention = [true, true, true, true];
 var cumulativeVotes = [0, 0, 0, 0];
 
 var x = d3.scale.linear()
@@ -80,22 +81,6 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
     .attr('x', -(margin.left) + 10)
     .attr('y', (roundIndex * vPadding) + (rowHeight / 2) + 5)
     .text('Round ' + (roundIndex + 1))
-
-  _.each(_.range(0, numberOfCandidates), function(i) {
-    svg.append('rect')
-      .attr('class', 'guide')
-      .attr('x', (i * (width / numberOfCandidates)) + (hPadding / 2))
-      .attr('y', roundIndex * vPadding)
-      .attr('width', (width / numberOfCandidates) - hPadding)
-      .attr('height', rowHeight);
-
-    svg.append('line')
-      .attr('class', 'threshold')
-      .attr('x1', (i * (width / numberOfCandidates)) + (hPadding / 2) + x(.5))
-      .attr('x2', (i * (width / numberOfCandidates)) + (hPadding / 2) + x(.5))
-      .attr('y1', roundIndex * vPadding)
-      .attr('y2', (roundIndex * vPadding) + rowHeight);
-  });
 });
 
 var line = d3.svg.line()
@@ -108,8 +93,31 @@ var line = d3.svg.line()
   .interpolate('basis');
 
 _.each(_.range(0, numberOfRounds), function(roundIndex) {
+
+  // Draw bar chart if candidate has not yet been eliminated
+  _.each(_.range(0, numberOfCandidates), function(candidateIndex) {
+    if (candidatesInContention[candidateIndex]) {
+      svg.append('rect')
+        .attr('class', 'guide')
+        .attr('x', (candidateIndex * (width / numberOfCandidates)) + (hPadding / 2))
+        .attr('y', roundIndex * vPadding)
+        .attr('width', (width / numberOfCandidates) - hPadding)
+        .attr('height', rowHeight);
+
+      svg.append('line')
+        .attr('class', 'threshold')
+        .attr('x1', (candidateIndex * (width / numberOfCandidates)) + (hPadding / 2) + x(.5))
+        .attr('x2', (candidateIndex * (width / numberOfCandidates)) + (hPadding / 2) + x(.5))
+        .attr('y1', roundIndex * vPadding)
+        .attr('y2', (roundIndex * vPadding) + rowHeight);
+    }
+    candidatesInContention[candidateIndex] = _.find(data[roundIndex], function(d) {
+      return d.to === candidateIndex;
+    });
+  });
+
   var enter = svg.append('g')
-    .attr('class', 'round-' + roundIndex)
+    .attr('class', 'round round-' + roundIndex)
     .selectAll('path')
       .data(data[roundIndex])
     .enter()
@@ -161,7 +169,7 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
       })
       .attr('transform', function(d) {
         return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
-      });
+      })
 
     if (roundIndex === numberOfRounds - 2) {
       cumulativeVotes = [0, 0, 0, 0];
@@ -186,4 +194,9 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
         });
     }
 });
+
+d3.selectAll('.vote-line')
+  .on('mouseover', function(d) {
+    console.log(d);
+  });
 
