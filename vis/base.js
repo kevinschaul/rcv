@@ -78,8 +78,8 @@ var x = d3.scale.linear()
   .domain([0, 1])
   .range([0, (width / numberOfCandidates - hPadding)]);
 
-// Draw boxes
 _.each(_.range(0, numberOfRounds), function(roundIndex) {
+  // Label rounds
   svg.append('text')
     .attr('class', 'label')
     .attr('x', -(margin.left) + 10)
