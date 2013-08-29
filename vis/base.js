@@ -1,4 +1,4 @@
-var margin = { top: 10, right: 10, bottom: 10, left: 30 };
+var margin = { top: 10, right: 10, bottom: 10, left: 60 };
 var width = 960 - margin.left - margin.right;
 var height = 500 - margin.top - margin.bottom;
 
@@ -8,67 +8,38 @@ var svg = d3.select('.target').append('svg')
     .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-var data = [
-  [
-    {
-      votes: 30,
-      from: 0,
-      to: 0
-    }, {
-      votes: 20,
-      from: 2,
-      to: 2
-    }, {
-      votes: 15,
-      from: 3,
-      to: 3
-    }, {
-      votes: 5,
-      from: 1,
-      to: 0
-    }, {
-      votes: 5,
-      from: 1,
-      to: 2
-    }, {
-      votes: 2,
-      from: 1,
-      to: 3
-    }
-  ], [
-    {
-      votes: 35,
-      from: 0,
-      to: 0
-    }, {
-      votes: 25,
-      from: 2,
-      to: 2
-    }, {
-      votes: 10,
-      from: 3,
-      to: 0
-    }, {
-      votes: 7,
-      from: 3,
-      to: 2
-    }
-  ],
-  []
-];
-
+// `data` is in an external script
+var data = window.data || [];
 console.log(data);
 
-var totalVotes = 77;
-var numberOfRounds = 3;
-var numberOfCandidates = 4;
-var hPadding = 100;
+var totalVotes = 0;
+_.each(data[0], function(d) {
+  totalVotes += d.votes;
+});
+console.log(totalVotes);
+
+var numberOfRounds = 2;
+var numberOfCandidates = 20;
+var hPadding = 4;
 var vPadding = 200;
 var rowHeight = 30;
 var candidateWidth = width / (numberOfCandidates);
 
-var candidatesInContention = [true, true, true, true];
-var cumulativeVotes = [0, 0, 0, 0];
+var candidatesInContention = [];
+var cumulativeVotes = [];
+
+for (var i = 0; i < numberOfCandidates; i++) {
+  candidatesInContention.push(true);
+  cumulativeVotes.push(0);
+}
+
+function resetCumulativeVotes() {
+  var _cumulativeVotes = [];
+  for (var i = 0; i < numberOfCandidates; i++) {
+    _cumulativeVotes.push(0);
+  }
+  return _cumulativeVotes;
+}
 
 var x = d3.scale.linear()
   .domain([0, 1])
@@ -122,7 +93,7 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
       .data(data[roundIndex])
     .enter()
 
-  cumulativeVotes = [0, 0, 0, 0];
+  cumulativeVotes = resetCumulativeVotes();
 
   enter.append('path')
       .attr('class', 'vote-line')
@@ -143,7 +114,7 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
         return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
       });
 
-  cumulativeVotes = [0, 0, 0, 0];
+  cumulativeVotes = resetCumulativeVotes();
 
   enter.append('path')
       .attr('class', 'vote-line')
@@ -172,7 +143,7 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
       })
 
     if (roundIndex === numberOfRounds - 2) {
-      cumulativeVotes = [0, 0, 0, 0];
+      cumulativeVotes = resetCumulativeVotes();
 
       enter.append('path')
         .attr('class', 'vote-line')
@@ -199,26 +170,4 @@ d3.selectAll('.vote-line')
   .on('mouseover', function(d) {
     console.log(d);
   });
-
-var annotations = svg.append('g')
-  .attr('class', 'annotations')
-
-annotations.append('line')
-  .attr('class', 'leader-line')
-  .attr('x1', (hPadding / 2) + x(.5))
-  .attr('x2', (hPadding / 2) + x(.5))
-  .attr('y1', rowHeight + 4)
-  .attr('y2', rowHeight + 18)
-
-annotations.append('text')
-  .attr('class', 'annotation')
-  .attr('x', (hPadding / 2) + x(.5) - 6)
-  .attr('y', rowHeight + 30)
-  .text('Threshold to win')
-
-annotations.append('text')
-  .attr('class', 'annotation')
-  .attr('x', (hPadding / 2) + x(.5) - 6)
-  .attr('y', rowHeight + 44)
-  .text('(50 percent plus one vote)')
 
