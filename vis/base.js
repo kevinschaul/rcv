@@ -53,13 +53,14 @@ var data = [
       from: 3,
       to: 2
     }
-  ]
+  ],
+  []
 ];
 
 console.log(data);
 
 var totalVotes = 77;
-var numberOfRounds = 2;
+var numberOfRounds = 3;
 var numberOfCandidates = 4;
 var hPadding = 100;
 var vPadding = 200;
@@ -162,7 +163,7 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
         return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
       });
 
-    if (roundIndex === numberOfRounds - 1) {
+    if (roundIndex === numberOfRounds - 2) {
       cumulativeVotes = [0, 0, 0, 0];
 
       enter.append('path')
