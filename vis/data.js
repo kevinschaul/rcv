@@ -237,19 +237,11 @@ window.data = [
       from: 16,
       to: 16
     }, {
-      votes: 7,
+      votes: 13,
       from: 8,
       to: 1
     }, {
-      votes: 12,
-      from: 8,
-      to: 16
-    }, {
-      votes: 6,
-      from: 8,
-      to: 1
-    }, {
-      votes: 5,
+      votes: 17,
       from: 8,
       to: 16
     }

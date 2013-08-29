@@ -21,8 +21,8 @@ console.log(totalVotes);
 var numberOfRounds = 6;
 var numberOfCandidates = 20;
 var hPadding = 4;
-var vPadding = 200;
-var rowHeight = 30;
+var vPadding = 140;
+var rowHeight = 15;
 var candidateWidth = width / (numberOfCandidates);
 
 var candidatesInContention = [];
