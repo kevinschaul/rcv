@@ -53,26 +53,20 @@ var data = [
       from: 3,
       to: 2
     }
-  ], [
-    {
-      votes: 45,
-      from: 0,
-      to: 0
-    }
   ]
 ];
 
 console.log(data);
 
 var totalVotes = 77;
-var numberOfRounds = 3;
+var numberOfRounds = 2;
 var numberOfCandidates = 4;
 var hPadding = 100;
 var vPadding = 200;
 var rowHeight = 30;
 var candidateWidth = width / (numberOfCandidates);
 
-var cumulativeVotes = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+var cumulativeVotes = [0, 0, 0, 0];
 
 var x = d3.scale.linear()
   .domain([0, 1])
@@ -113,17 +107,42 @@ var line = d3.svg.line()
   .interpolate('basis');
 
 _.each(_.range(0, numberOfRounds), function(roundIndex) {
-  svg.append('g')
+  var enter = svg.append('g')
     .attr('class', 'round-' + roundIndex)
     .selectAll('path')
       .data(data[roundIndex])
-    .enter().append('path')
+    .enter()
+
+  cumulativeVotes = [0, 0, 0, 0];
+
+  enter.append('path')
       .attr('class', 'vote-line')
       .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
       .attr('d', function(d) {
         var lineData = [];
-        var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotes[roundIndex][d.from]), roundIndex * vPadding];
-        var endPoint = [(d.to * candidateWidth) + x(cumulativeVotes[roundIndex][d.to]), (roundIndex + 1) * vPadding];
+        var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.from]), roundIndex * vPadding];
+        var endPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.from]), roundIndex * vPadding + rowHeight];
+
+        lineData.push(beginPoint);
+        lineData.push(endPoint);
+
+        cumulativeVotes[d.from] += d.votes / totalVotes;
+
+        return line(lineData);
+      })
+      .attr('transform', function(d) {
+        return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
+      });
+
+  cumulativeVotes = [0, 0, 0, 0];
+
+  enter.append('path')
+      .attr('class', 'vote-line')
+      .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
+      .attr('d', function(d) {
+        var lineData = [];
+        var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.from]), roundIndex * vPadding + rowHeight];
+        var endPoint = [(d.to * candidateWidth) + x(cumulativeVotes[d.to]), (roundIndex + 1) * vPadding];
 
         var midPoint = [(beginPoint[0] + endPoint[0]) / 2, (beginPoint[1] + endPoint[1]) / 2];
         var preMidPoint = [beginPoint[0], beginPoint[1] + (vPadding / 3)];
@@ -135,12 +154,35 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
         lineData.push(postMidPoint);
         lineData.push(endPoint);
 
-        cumulativeVotes[roundIndex][d.from] += d.votes / totalVotes;
+        cumulativeVotes[d.from] += d.votes / totalVotes;
 
         return line(lineData);
       })
       .attr('transform', function(d) {
         return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
       });
+
+    if (roundIndex === numberOfRounds - 1) {
+      cumulativeVotes = [0, 0, 0, 0];
+
+      enter.append('path')
+        .attr('class', 'vote-line')
+        .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
+        .attr('d', function(d) {
+          var lineData = [];
+          var beginPoint = [(d.to * candidateWidth) + x(cumulativeVotes[d.to]), (roundIndex + 1) * vPadding];
+          var endPoint = [(d.to * candidateWidth) + x(cumulativeVotes[d.to]), ((roundIndex + 1) * vPadding + rowHeight)];
+
+          lineData.push(beginPoint);
+          lineData.push(endPoint);
+
+          cumulativeVotes[d.from] += d.votes / totalVotes;
+
+          return line(lineData);
+        })
+        .attr('transform', function(d) {
+          return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
+        });
+    }
 });
 
