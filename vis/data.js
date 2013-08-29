@@ -137,10 +137,6 @@ window.data = [
     }
   ], [
     {
-      votes: 3,
-      from: 0,
-      to: 0
-    }, {
       votes: 26,
       from: 1,
       to: 1
@@ -161,13 +157,29 @@ window.data = [
       from: 11,
       to: 11
     }, {
-      votes: 3,
-      from: 15,
-      to: 15
-    }, {
       votes: 28,
       from: 16,
       to: 16
+    }, {
+      votes: 2,
+      from: 0,
+      to: 16
+    }, {
+      votes: 1,
+      from: 0,
+      to: 8
+    }, {
+      votes: 1,
+      from: 15,
+      to: 1
+    }, {
+      votes: 1,
+      from: 15,
+      to: 2
+    }, {
+      votes: 1,
+      from: 15,
+      to: 8
     }
   ], [
     {
@@ -175,24 +187,44 @@ window.data = [
       from: 1,
       to: 1
     }, {
-      votes: 5,
-      from: 2,
-      to: 2
-    }, {
-      votes: 5,
-      from: 4,
-      to: 4
-    }, {
       votes: 19,
       from: 8,
       to: 8
     }, {
-      votes: 7,
-      from: 11,
-      to: 11
-    }, {
       votes: 37,
       from: 16,
+      to: 16
+    }, {
+      votes: 2,
+      from: 2,
+      to: 1
+    }, {
+      votes: 1,
+      from: 2,
+      to: 8
+    }, {
+      votes: 2,
+      from: 2,
+      to: 16
+    }, {
+      votes: 1,
+      from: 4,
+      to: 1
+    }, {
+      votes: 3,
+      from: 4,
+      to: 8
+    }, {
+      votes: 1,
+      from: 4,
+      to: 16
+    }, {
+      votes: 5,
+      from: 11,
+      to: 8
+    }, {
+      votes: 2,
+      from: 11,
       to: 16
     }
   ], [
@@ -201,22 +233,24 @@ window.data = [
       from: 1,
       to: 1
     }, {
-      votes: 28,
-      from: 8,
-      to: 8
-    }, {
       votes: 42,
       from: 16,
       to: 16
-    }
-  ], [
-    {
-      votes: 43,
-      from: 1,
+    }, {
+      votes: 7,
+      from: 8,
       to: 1
     }, {
-      votes: 57,
-      from: 16,
+      votes: 12,
+      from: 8,
+      to: 16
+    }, {
+      votes: 6,
+      from: 8,
+      to: 1
+    }, {
+      votes: 5,
+      from: 8,
       to: 16
     }
   ],
