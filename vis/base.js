@@ -66,7 +66,7 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
 
 var x = d3.scale.linear()
   .domain([0, 50])
-  .range([0, width / numberOfCandidates])
+  .range([0, width / numberOfCandidates]);
 
 var line = d3.svg.line()
   .x(function(d, i) {
@@ -75,7 +75,7 @@ var line = d3.svg.line()
   .y(function(d, i) {
     return d[1];
   })
-  .interpolate('basis')
+  .interpolate('basis');
 
 svg.selectAll('path')
     .data(data)
@@ -101,4 +101,7 @@ svg.selectAll('path')
 
       return line(lineData);
     })
+    .attr('transform', function(d) {
+      return 'translate(' + (x(d.votes) / 2) + ',0)';
+    });
 
