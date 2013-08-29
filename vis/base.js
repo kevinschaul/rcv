@@ -9,37 +9,68 @@ var svg = d3.select('.target').append('svg')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
 var data = [
-  {
-    round: 0,
-    votes: 30,
-    from: 0,
-    to: 0
-  }, {
-    round: 0,
-    votes: 5,
-    from: 1,
-    to: 0
-  }, {
-    round: 0,
-    votes: 5,
-    from: 1,
-    to: 2
-  }, {
-    round: 0,
-    votes: 2,
-    from: 1,
-    to: 3
-  }, {
-    round: 0,
-    votes: 20,
-    from: 2,
-    to: 2
-  }, {
-    round: 0,
-    votes: 15,
-    from: 3,
-    to: 3
-  }
+  [
+    {
+      round: 0,
+      votes: 30,
+      from: 0,
+      to: 0
+    }, {
+      round: 0,
+      votes: 20,
+      from: 2,
+      to: 2
+    }, {
+      round: 0,
+      votes: 15,
+      from: 3,
+      to: 3
+    }, {
+      round: 0,
+      votes: 5,
+      from: 1,
+      to: 0
+    }, {
+      round: 0,
+      votes: 5,
+      from: 1,
+      to: 2
+    }, {
+      round: 0,
+      votes: 2,
+      from: 1,
+      to: 3
+    }
+  ], [
+    {
+      round: 1, // TODO remove round property
+      votes: 35,
+      from: 0,
+      to: 0
+    }, {
+      round: 1,
+      votes: 25,
+      from: 2,
+      to: 2
+    }, {
+      round: 1,
+      votes: 10,
+      from: 3,
+      to: 0
+    }, {
+      round: 1,
+      votes: 7,
+      from: 3,
+      to: 2
+    }
+  ], [
+    {
+      round: 2,
+      votes: 45,
+      from: 0,
+      to: 0
+    }
+  ]
 ];
 
 console.log(data);
@@ -50,7 +81,7 @@ var hPadding = 0; // TODO
 var vPadding = 200;
 var candidateWidth = width / (numberOfCandidates);
 
-var cumulativeVotes = [0, 0, 0, 0];
+var cumulativeVotes = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
 
 // Draw boxes
 _.each(_.range(0, numberOfRounds), function(roundIndex) {
@@ -77,31 +108,35 @@ var line = d3.svg.line()
   })
   .interpolate('basis');
 
-svg.selectAll('path')
-    .data(data)
-  .enter().append('path')
-    .attr('class', 'vote-line')
-    .style('stroke-width', function(d) { return x(d.votes); })
-    .attr('d', function(d) {
-      var lineData = [];
-      var beginPoint = [d.from * candidateWidth, d.round * vPadding];
-      var endPoint = [d.to * candidateWidth, (d.round + 1) * vPadding];
+_.each(_.range(0, numberOfRounds), function(roundIndex) {
+  svg.append('g')
+    .attr('class', 'round-' + roundIndex)
+    .selectAll('path')
+      .data(data[roundIndex])
+    .enter().append('path')
+      .attr('class', 'vote-line')
+      .style('stroke-width', function(d) { return x(d.votes); })
+      .attr('d', function(d) {
+        var lineData = [];
+        var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.round][d.from]), d.round * vPadding];
+        var endPoint = [(d.to * candidateWidth) + x(cumulativeVotes[d.round][d.to]), (d.round + 1) * vPadding];
 
-      var midPoint = [(beginPoint[0] + endPoint[0]) / 2, (beginPoint[1] + endPoint[1]) / 2];
-      var preMidPoint = [beginPoint[0], beginPoint[1] + (vPadding / 3)];
-      var postMidPoint = [endPoint[0], endPoint[1] - (vPadding / 3)];
+        var midPoint = [(beginPoint[0] + endPoint[0]) / 2, (beginPoint[1] + endPoint[1]) / 2];
+        var preMidPoint = [beginPoint[0], beginPoint[1] + (vPadding / 3)];
+        var postMidPoint = [endPoint[0], endPoint[1] - (vPadding / 3)];
 
-      lineData.push(beginPoint);
-      lineData.push(preMidPoint);
-      lineData.push(midPoint);
-      lineData.push(postMidPoint);
-      lineData.push(endPoint);
+        lineData.push(beginPoint);
+        lineData.push(preMidPoint);
+        lineData.push(midPoint);
+        lineData.push(postMidPoint);
+        lineData.push(endPoint);
 
-      console.log(lineData);
+        cumulativeVotes[d.round][d.from] += d.votes;
 
-      return line(lineData);
-    })
-    .attr('transform', function(d) {
-      return 'translate(' + (x(d.votes) / 2) + ',0)';
-    });
+        return line(lineData);
+      })
+      .attr('transform', function(d) {
+        return 'translate(' + (x(d.votes) / 2) + ',0)';
+      });
+});
 
