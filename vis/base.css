@@ -13,7 +13,6 @@ body {
 
 .graphic {
   width: 960px;
-  height: 750px;
   margin: auto;
   color: #333;
 }
@@ -23,6 +22,19 @@ body {
   font-size: 27px;
   margin-bottom: 0px;
   text-align: center;
+}
+
+.graphic h2 {
+  font-family: Arial, sans-serif;
+  font-size: 23px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+.graphic p {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .summary {
@@ -35,8 +47,19 @@ body {
   margin-bottom: 20px;
 }
 
+.sub-summary {
+  font-family: Gerogia, serif;
+  font-size: 18px;
+  line-height: 20px;
+  width: 550px;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
 .chart-wrapper {
   position: relative;
+  height: 580px;
 }
 
 .controls {
@@ -145,5 +168,16 @@ body {
 }
 .vote-line-active {
   stroke-opacity: 0.9;
+}
+
+.col1 {
+  margin-left: 100px;
+  width: 380px;
+  float: left;
+}
+.col2 {
+  margin-right: 100px;
+  width: 380px;
+  float: left;
 }
 

@@ -126,7 +126,7 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
 
   var path = enter.append('path')
     .attr('class', function(d) {
-      var c = 'vote-line vote-line-round-' + roundIndex + ' vote-line-from-' + d.from + '-to-' + d.to;
+      var c = 'vote-line vote-line-between-rounds vote-line-round-' + roundIndex + ' vote-line-from-' + d.from + '-to-' + d.to;
       if (d.from === d.to) {
         c += ' vote-line-same';
       } else {
@@ -181,7 +181,7 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
     }
 });
 
-d3.selectAll('.vote-line')
+d3.selectAll('.vote-line-between-rounds')
   .on('mouseover', function(d) {
     console.log(d);
     d3.select(this)
