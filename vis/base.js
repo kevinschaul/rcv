@@ -400,7 +400,7 @@ var stages = [
         .style('stroke-opacity', 0.7);
       allowClick = true;
     })
-    explanationD3.text('With this redistribution, Candidate A reached the threshold, and thus is the winner.');
+    explanationD3.text('With this redistribution, Candidate C reached the threshold, and thus is the winner.');
   },
   function() {
     d3.selectAll('.guide-wrapper-round-2.guide-wrapper-candidate-2 rect,.guide-wrapper-round-2.guide-wrapper-candidate-2 line')
