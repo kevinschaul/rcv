@@ -92,31 +92,120 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
   cumulativeVotesOut = resetCumulativeVotes();
 
   enter.append('path')
-    .attr('class', 'vote-line')
+    .attr('class', 'vote-line vote-line-chart-round-' + roundIndex)
     .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
+    .attr('transform', function(d) {
+      return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
+    })
     .attr('d', function(d) {
       var lineData = [];
       var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding];
-      var endPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding + rowHeight];
 
       lineData.push(beginPoint);
-      lineData.push(endPoint);
+      lineData.push(beginPoint);
 
       cumulativeVotesIn[d.to] += d.votes / totalVotes;
       cumulativeVotesOut[d.from] += d.votes / totalVotes;
 
       return line(lineData);
-    })
-    .attr('transform', function(d) {
-      return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
     });
 
+  cumulativeVotesInitialIn = resetCumulativeVotes();
+  cumulativeVotesInitialOut = resetCumulativeVotes();
   cumulativeVotesIn = resetCumulativeVotes();
   cumulativeVotesOut = resetCumulativeVotes();
 
   enter.append('path')
-    .attr('class', 'vote-line')
+    .attr('class', function(d) { return 'vote-line vote-line-round-' + roundIndex; })
     .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
+    .attr('transform', function(d) {
+      return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
+    })
+    .attr('d', function(d) {
+      var lineData = [];
+      var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesInitialOut[d.from]), roundIndex * vPadding + rowHeight];
+      var preMidPoint = [beginPoint[0], beginPoint[1] + (vPadding / 3)];
+
+      lineData.push(beginPoint);
+      lineData.push(beginPoint);
+      lineData.push(beginPoint);
+      lineData.push(beginPoint);
+      lineData.push(beginPoint);
+
+      cumulativeVotesInitialIn[d.to] += d.votes / totalVotes;
+      cumulativeVotesInitialOut[d.from] += d.votes / totalVotes;
+
+      return line(lineData);
+    })
+
+    if (roundIndex === numberOfRounds - 2) {
+      cumulativeVotesIn = resetCumulativeVotes();
+      cumulativeVotesOut = resetCumulativeVotes();
+
+      enter.append('path')
+        .attr('class', 'vote-line vote-line-finish-round-' + roundIndex)
+        .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
+        .attr('transform', function(d) {
+          return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
+        })
+        .attr('d', function(d) {
+          var lineData = [];
+          var beginPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), (roundIndex + 1) * vPadding];
+          var endPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), ((roundIndex + 1) * vPadding + rowHeight)];
+
+          lineData.push(beginPoint);
+          lineData.push(beginPoint);
+
+          cumulativeVotesIn[d.to] += d.votes / totalVotes;
+          cumulativeVotesOut[d.from] += d.votes / totalVotes;
+
+          return line(lineData);
+        })
+    }
+});
+
+d3.selectAll('.vote-line')
+  .on('mouseover', function(d) {
+    console.log(d);
+  });
+
+function showRoundChart(roundIndex, callback) {
+  var duration = 500;
+
+  cumulativeVotesIn = resetCumulativeVotes();
+  cumulativeVotesOut = resetCumulativeVotes();
+
+  d3.selectAll('.vote-line-chart-round-' + roundIndex)
+  .transition()
+    .ease('linear')
+    .duration(duration)
+    .attr('d', function(d) {
+        var lineData = [];
+        var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding];
+        var endPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding + rowHeight];
+
+        lineData.push(beginPoint);
+        lineData.push(endPoint);
+
+        cumulativeVotesIn[d.to] += d.votes / totalVotes;
+        cumulativeVotesOut[d.from] += d.votes / totalVotes;
+
+        return line(lineData);
+      });
+
+  if (callback) window.setTimeout(callback, duration);
+}
+
+function showRound(roundIndex, callback) {
+  var duration = 1500;
+
+  cumulativeVotesIn = resetCumulativeVotes();
+  cumulativeVotesOut = resetCumulativeVotes();
+
+  d3.selectAll('.vote-line-round-' + roundIndex)
+  .transition()
+    .ease('linear')
+    .duration(duration)
     .attr('d', function(d) {
       var lineData = [];
       var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding + rowHeight];
@@ -137,40 +226,45 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
 
       return line(lineData);
     })
-    .attr('transform', function(d) {
-      return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
+
+  if (callback) window.setTimeout(callback, duration);
+}
+
+function showRoundFinish(roundIndex, callback) {
+  var duration = 500;
+
+  cumulativeVotesIn = resetCumulativeVotes();
+  cumulativeVotesOut = resetCumulativeVotes();
+
+  d3.selectAll('.vote-line-finish-round-' + roundIndex)
+    .transition()
+    .duration(500)
+    .attr('d', function(d) {
+      var lineData = [];
+      var beginPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), (roundIndex + 1) * vPadding];
+      var endPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), ((roundIndex + 1) * vPadding + rowHeight)];
+
+      lineData.push(beginPoint);
+      lineData.push(endPoint);
+
+      cumulativeVotesIn[d.to] += d.votes / totalVotes;
+      cumulativeVotesOut[d.from] += d.votes / totalVotes;
+
+      return line(lineData);
     })
 
-    if (roundIndex === numberOfRounds - 2) {
-      cumulativeVotesIn = resetCumulativeVotes();
-      cumulativeVotesOut = resetCumulativeVotes();
+  if (callback) window.setTimeout(callback, duration);
+}
 
-      enter.append('path')
-        .attr('class', 'vote-line')
-        .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
-        .attr('d', function(d) {
-          var lineData = [];
-          var beginPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), (roundIndex + 1) * vPadding];
-          var endPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), ((roundIndex + 1) * vPadding + rowHeight)];
-
-          lineData.push(beginPoint);
-          lineData.push(endPoint);
-
-          cumulativeVotesIn[d.to] += d.votes / totalVotes;
-          cumulativeVotesOut[d.from] += d.votes / totalVotes;
-
-          return line(lineData);
-        })
-        .attr('transform', function(d) {
-          return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
-        });
-    }
-});
-
-d3.selectAll('.vote-line')
-  .on('mouseover', function(d) {
-    console.log(d);
+showRoundChart(0, function() {
+  showRound(0, function() {
+    showRoundChart(1, function() {
+      showRound(1, function() {
+        showRoundFinish(1);
+      });
+    });
   });
+});
 
 var annotations = svg.append('g')
   .attr('class', 'annotations')
