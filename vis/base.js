@@ -401,6 +401,26 @@ var stages = [
       allowClick = true;
     })
     explanationD3.text('With this redistribution, Candidate A reached the threshold, and thus is the winner.');
+  },
+  function() {
+    d3.selectAll('.guide-wrapper-round-2.guide-wrapper-candidate-2 rect,.guide-wrapper-round-2.guide-wrapper-candidate-2 line')
+      .style('stroke', '#999')
+    d3.selectAll('.vote-line-finish-candidate-2')
+      .style('stroke-opacity', 0.5);
+
+    d3.selectAll('.vote-line-chart-round-0')
+      .transition()
+      .style('stroke-opacity', 0.7);
+    explanationD3.text('Although Candidate A earned the most first choice votes, he lost the election.');
+  },
+  function() {
+    d3.selectAll('.vote-line-chart-round-0')
+      .style('stroke-opacity', 0.5);
+
+    d3.selectAll('.vote-line-round-1.vote-line-from-3-to-2')
+      .transition()
+      .style('stroke-opacity', 0.7);
+    explanationD3.text('Ranked choice voting promotes positive campaigns by giving incentives to "teaming up" with other candidates. Here, Candidate C benefited greatly from voters who also liked Candidate D.');
   }
 ];
 
