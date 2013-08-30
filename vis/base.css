@@ -13,6 +13,30 @@
   color: #333;
 }
 
+.btn {
+  float: left;
+  width: 30px;
+  height: 20px;
+  padding: 6px 10px;
+  margin: 2px;
+  background-color: #666;
+  border-radius: 4px;
+  color: #fff;
+  text-align: center;
+  line-height: 20px;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #999;
+}
+.btn-inactive {
+  background-color: #ccc;
+  cursor: default;
+}
+.btn-inactive:hover {
+  background-color: #ccc;
+}
+
 .candidates {
   margin-left: 28px;
 }
