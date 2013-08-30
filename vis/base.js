@@ -332,25 +332,40 @@ d3.select('.btn-next')
 
 var currentStage = 0;
 var explanationD3 = d3.select('.explanation');
+var allowClick = true;
 
 var stages = [
   function() {
     d3.selectAll('.round-label-round-0, .guide-wrapper-round-0')
       .style('display', 'block')
+
     d3.selectAll('.annotation-0')
       .style('display', 'block')
-    showRoundChart(0)
+
+    allowClick = false;
+    showRoundChart(0, function() {
+      allowClick = true;
+    })
+
     explanationD3.text('Voters mark their first, second and third choice candidates on their ballots. If any candidate wins a majority of first choice votes, he or she is the winner.');
   },
   function() {
     d3.selectAll('.round-label-round-1, .guide-wrapper-round-1')
       .style('display', 'block')
-    showRoundSame(0);
+
+    allowClick = false;
+    showRoundSame(0, function() {
+      allowClick = true;
+    });
+
     explanationD3.text('Since no candidate reached the threshold, we continue to Round 2. The candidate with the least votes is eliminated.');
   },
   function() {
+    allowClick = false;
     showRoundDifferent(0, function() {
-      showRoundChart(1);
+      showRoundChart(1, function() {
+        allowClick = true;
+      });
     });
     explanationD3.text('Votes for eliminated candidates are redistributed based on voters\' second or third choice votes.');
   },
@@ -365,12 +380,17 @@ var stages = [
 
     d3.selectAll('.round-label-round-2, .guide-wrapper-round-2')
       .style('display', 'block')
+
+    allowClick = false;
     showRoundSame(1, function() {
-      showRoundDifferent(1)
+      showRoundDifferent(1, function() {
+        allowClick = true;
+      });
     })
     explanationD3.text('Still, no candidate has reached the threshold. The candidate with the least votes is eliminated again, with his or her votes redistributed.');
   },
   function() {
+    allowClick = false;
     showRoundFinish(1, function() {
       d3.selectAll('.guide-wrapper-round-2.guide-wrapper-candidate-2 rect,.guide-wrapper-round-2.guide-wrapper-candidate-2 line')
         .transition()
@@ -378,13 +398,14 @@ var stages = [
       d3.selectAll('.vote-line-finish-candidate-2')
         .transition()
         .style('stroke-opacity', 0.7);
+      allowClick = true;
     })
     explanationD3.text('With this redistribution, Candidate A reached the threshold, and thus is the winner.');
   }
 ];
 
 function nextStage() {
-  if (currentStage + 1 < stages.length) {
+  if (allowClick && currentStage + 1 < stages.length) {
     currentStage++;
     stages[currentStage]();
     checkStageButtons();
