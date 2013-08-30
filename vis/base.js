@@ -286,7 +286,7 @@ function showRoundFinish(roundIndex, callback) {
 
   d3.selectAll('.vote-line-finish-round-' + roundIndex)
     .transition()
-    .duration(500)
+    .duration(duration)
     .attr('d', function(d) {
       var lineData = [];
       var beginPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), (roundIndex + 1) * vPadding];
@@ -329,9 +329,6 @@ a0.append('text')
 
 d3.select('.btn-next')
   .on('click', nextStage);
-
-d3.select('.btn-previous')
-  .on('click', previousStage);
 
 var currentStage = 0;
 var explanationD3 = d3.select('.explanation');
@@ -394,21 +391,10 @@ function nextStage() {
   }
 }
 
-function previousStage() {
-  if (currentStage - 1 >= 0) {
-    currentStage--;
-    stages[currentStage]();
-    checkStageButtons();
-  }
-}
-
 function checkStageButtons() {
   d3.selectAll('.btn-inactive')
     .classed('btn-inactive', false);
-  if (currentStage === 0) {
-    d3.select('.btn-previous')
-      .classed('btn-inactive', true);
-  } else if (currentStage === stages.length - 1) {
+  if (currentStage === stages.length - 1) {
     d3.select('.btn-next')
       .classed('btn-inactive', true);
   }
