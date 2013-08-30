@@ -118,9 +118,15 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
   cumulativeVotesIn = resetCumulativeVotes();
   cumulativeVotesOut = resetCumulativeVotes();
 
-  enter.append('path')
+  var path = enter.append('path')
     .attr('class', function(d) {
-      return 'vote-line vote-line-round-' + roundIndex + ' vote-line-from-' + d.from + '-to-' + d.to;
+      var c = 'vote-line vote-line-round-' + roundIndex + ' vote-line-from-' + d.from + '-to-' + d.to;
+      if (d.from === d.to) {
+        c += ' vote-line-same';
+      } else {
+        c += ' vote-line-different';
+      }
+      return c;
     })
     .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
     .attr('transform', function(d) {
@@ -191,29 +197,60 @@ function showRoundChart(roundIndex, callback) {
     .ease('linear')
     .duration(duration)
     .attr('d', function(d) {
-        var lineData = [];
-        var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding];
-        var endPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding + rowHeight];
+      var lineData = [];
+      var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding];
+      var endPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding + rowHeight];
 
-        lineData.push(beginPoint);
-        lineData.push(endPoint);
+      lineData.push(beginPoint);
+      lineData.push(endPoint);
 
-        cumulativeVotesIn[d.to] += d.votes / totalVotes;
-        cumulativeVotesOut[d.from] += d.votes / totalVotes;
+      cumulativeVotesIn[d.to] += d.votes / totalVotes;
+      cumulativeVotesOut[d.from] += d.votes / totalVotes;
 
-        return line(lineData);
-      });
+      return line(lineData);
+    });
 
   if (callback) window.setTimeout(callback, duration);
 }
 
-function showRound(roundIndex, callback) {
+function showRoundSame(roundIndex, callback) {
   var duration = 1500;
 
   cumulativeVotesIn = resetCumulativeVotes();
   cumulativeVotesOut = resetCumulativeVotes();
 
-  d3.selectAll('.vote-line-round-' + roundIndex)
+  d3.selectAll('.vote-line-round-' + roundIndex + '.vote-line-same')
+  .transition()
+    .ease('linear')
+    .duration(duration)
+    .attr('d', function(d) {
+      var lineData = [];
+      var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding + rowHeight];
+      var endPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), (roundIndex + 1) * vPadding];
+
+      var midPoint = [(beginPoint[0] + endPoint[0]) / 2, (beginPoint[1] + endPoint[1]) / 2];
+      var preMidPoint = [beginPoint[0], beginPoint[1] + (vPadding / 3)];
+      var postMidPoint = [endPoint[0], endPoint[1] - (vPadding / 3)];
+
+      lineData.push(beginPoint);
+      lineData.push(preMidPoint);
+      lineData.push(midPoint);
+      lineData.push(postMidPoint);
+      lineData.push(endPoint);
+
+      cumulativeVotesIn[d.to] += d.votes / totalVotes;
+      cumulativeVotesOut[d.from] += d.votes / totalVotes;
+
+      return line(lineData);
+    })
+
+  if (callback) window.setTimeout(callback, duration);
+}
+
+function showRoundDifferent(roundIndex, callback) {
+  var duration = 1500;
+
+  d3.selectAll('.vote-line-round-' + roundIndex + '.vote-line-different')
   .transition()
     .ease('linear')
     .duration(duration)
@@ -301,26 +338,24 @@ var explanationD3 = d3.select('.explanation');
 
 var stages = [
   function() {
-    d3.selectAll('.round-label-round-0, .guide-wrapper-round-0, .annotation-0')
+    d3.selectAll('.round-label-round-0, .guide-wrapper-round-0')
       .style('display', 'block')
-    explanationD3.text('Voters mark their first, second and third choice candidates on their ballots.');
+    d3.selectAll('.annotation-0')
+      .style('display', 'block')
+    showRoundChart(0)
+    explanationD3.text('Voters mark their first, second and third choice candidates on their ballots. If any candidate wins a majority of first choice votes, he or she is the winner.');
   },
   function() {
-    window.setTimeout(function() {
-      showRoundChart(0, function() {
-        window.setTimeout(function() {
-          d3.selectAll('.round-label-round-1, .guide-wrapper-round-1')
-            .style('display', 'block')
-        }, 500)
-      })
-    }, 500);
-    explanationD3.text('If any candidate wins a majority of first choice votes, he or she is the winner. Since no candidate reached the threshold, we continue to Round 2.');
+    d3.selectAll('.round-label-round-1, .guide-wrapper-round-1')
+      .style('display', 'block')
+    showRoundSame(0);
+    explanationD3.text('Since no candidate reached the threshold, we continue to Round 2. The candidate with the least votes is eliminated.');
   },
   function() {
-    showRound(0, function() {
+    showRoundDifferent(0, function() {
       showRoundChart(1);
     });
-    explanationD3.text('The candidate with the least votes is eliminated. Votes for this candidate are redistributed based on voters\' second choice votes.');
+    explanationD3.text('Votes for eliminated candidates are redistributed based on voters\' second or third choice votes.');
   },
   function() {
     d3.select('.vote-line-round-0.vote-line-from-1-to-0')
@@ -333,14 +368,16 @@ var stages = [
 
     d3.selectAll('.round-label-round-2, .guide-wrapper-round-2')
       .style('display', 'block')
-    showRound(1, function() {
-      showRoundFinish(1, function() {
-        d3.selectAll('.guide-wrapper-round-2.guide-wrapper-candidate-0 rect,.guide-wrapper-round-2.guide-wrapper-candidate-0 line')
-          .transition()
-          .style('stroke', '#333')
-        d3.selectAll('.vote-line-finish-candidate-0')
-          .transition()
-          .style('stroke-opacity', 0.7);
+    showRoundSame(1, function() {
+      showRoundDifferent(1, function() {
+        showRoundFinish(1, function() {
+          d3.selectAll('.guide-wrapper-round-2.guide-wrapper-candidate-0 rect,.guide-wrapper-round-2.guide-wrapper-candidate-0 line')
+            .transition()
+            .style('stroke', '#333')
+          d3.selectAll('.vote-line-finish-candidate-0')
+            .transition()
+            .style('stroke-opacity', 0.7);
+        })
       })
     });
     explanationD3.text('With that redistribution, Candidate A reached the threshold, and thus is the winner.');
