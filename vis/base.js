@@ -358,29 +358,31 @@ var stages = [
     explanationD3.text('Votes for eliminated candidates are redistributed based on voters\' second or third choice votes.');
   },
   function() {
-    d3.select('.vote-line-round-0.vote-line-from-1-to-0')
+    d3.select('.vote-line-round-0.vote-line-from-1-to-3')
       .classed('vote-line-active', true);
-    explanationD3.text('For example, if Joe voted first choice for Candidate B and second for Candidate A, his vote has moved to Candidate A.');
+    explanationD3.text('For example, if Joe voted first choice for Candidate B and second choice for Candidate D, his vote would have moved to Candidate D.');
   },
   function() {
-    d3.select('.vote-line-round-0.vote-line-from-1-to-0')
+    d3.select('.vote-line-round-0.vote-line-from-1-to-3')
       .classed('vote-line-active', false);
 
     d3.selectAll('.round-label-round-2, .guide-wrapper-round-2')
       .style('display', 'block')
     showRoundSame(1, function() {
-      showRoundDifferent(1, function() {
-        showRoundFinish(1, function() {
-          d3.selectAll('.guide-wrapper-round-2.guide-wrapper-candidate-0 rect,.guide-wrapper-round-2.guide-wrapper-candidate-0 line')
-            .transition()
-            .style('stroke', '#333')
-          d3.selectAll('.vote-line-finish-candidate-0')
-            .transition()
-            .style('stroke-opacity', 0.7);
-        })
-      })
-    });
-    explanationD3.text('With that redistribution, Candidate A reached the threshold, and thus is the winner.');
+      showRoundDifferent(1)
+    })
+    explanationD3.text('Still, no candidate has reached the threshold. The candidate with the least votes is eliminated again, with his or her votes redistributed.');
+  },
+  function() {
+    showRoundFinish(1, function() {
+      d3.selectAll('.guide-wrapper-round-2.guide-wrapper-candidate-2 rect,.guide-wrapper-round-2.guide-wrapper-candidate-2 line')
+        .transition()
+        .style('stroke', '#333')
+      d3.selectAll('.vote-line-finish-candidate-2')
+        .transition()
+        .style('stroke-opacity', 0.7);
+    })
+    explanationD3.text('With this redistribution, Candidate A reached the threshold, and thus is the winner.');
   }
 ];
 

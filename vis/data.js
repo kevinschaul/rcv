@@ -13,7 +13,7 @@ window.data = [
       from: 3,
       to: 3
     }, {
-      votes: 5,
+      votes: 2,
       from: 1,
       to: 0
     }, {
@@ -21,13 +21,13 @@ window.data = [
       from: 1,
       to: 2
     }, {
-      votes: 2,
+      votes: 5,
       from: 1,
       to: 3
     }
   ], [
     {
-      votes: 35,
+      votes: 32,
       from: 0,
       to: 0
     }, {
@@ -35,11 +35,11 @@ window.data = [
       from: 2,
       to: 2
     }, {
-      votes: 10,
+      votes: 2,
       from: 3,
       to: 0
     }, {
-      votes: 7,
+      votes: 18,
       from: 3,
       to: 2
     }
