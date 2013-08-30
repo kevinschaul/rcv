@@ -331,6 +331,7 @@ d3.select('.btn-next')
   .on('click', nextStage);
 
 var currentStage = 0;
+var controlsD3 = d3.select('.controls');
 var explanationD3 = d3.select('.explanation');
 var allowClick = true;
 
@@ -358,6 +359,10 @@ var stages = [
       allowClick = true;
     });
 
+    controlsD3.transition()
+      .ease('linear')
+      .duration(500)
+      .style('top', 330);
     explanationD3.text('Since no candidate reached the threshold, we continue to Round 2. The candidate with the least votes is eliminated.');
   },
   function() {
@@ -387,6 +392,11 @@ var stages = [
         allowClick = true;
       });
     })
+
+    controlsD3.transition()
+      .ease('linear')
+      .duration(500)
+      .style('top', 510);
     explanationD3.text('Still, no candidate has reached the threshold. The candidate with the least votes is eliminated again, with his or her votes redistributed.');
   },
   function() {
