@@ -1,10 +1,10 @@
 var margin = { top: 10, right: 10, bottom: 10, left: 30 };
 var width = 960 - margin.left - margin.right;
-var height = 500 - margin.top - margin.bottom;
+var height = 450 - margin.top - margin.bottom;
 
 var svg = d3.select('.target').append('svg')
   .attr('width', 960)
-  .attr('height', 800)
+  .attr('height', 450)
     .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
