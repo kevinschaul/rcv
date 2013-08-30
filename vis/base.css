@@ -6,8 +6,14 @@
   -moz-user-select: none;
 }
 
+body {
+  width: 960px;
+  margin: auto;
+}
+
 .graphic {
   width: 960px;
+  height: 750px;
   margin: auto;
   color: #333;
 }
@@ -109,7 +115,7 @@
 .annotation {
   font-family: Arial, sans-serif;
   font-size: 12px;
-  fill: #999;
+  fill: #666;
   stroke: none;
   display: none;
 }
