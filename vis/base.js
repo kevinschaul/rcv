@@ -43,7 +43,7 @@ var x = d3.scale.linear()
 _.each(_.range(0, numberOfRounds), function(roundIndex) {
   // Label rounds
   svg.append('text')
-    .attr('class', 'label')
+    .attr('class', 'round-label round-label-round-' + roundIndex)
     .attr('x', -(margin.left) + 10)
     .attr('y', (roundIndex * vPadding) + (rowHeight / 2) + 5)
     .text('Round ' + (roundIndex + 1))
@@ -63,14 +63,17 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
   // Draw bar chart if candidate has not yet been eliminated
   _.each(_.range(0, numberOfCandidates), function(candidateIndex) {
     if (candidatesInContention[candidateIndex]) {
-      svg.append('rect')
+      var guideWrapper = svg.append('g')
+        .attr('class', 'guide-wrapper guide-wrapper-round-' + roundIndex + ' guide-wrapper-candidate-' + candidateIndex)
+
+      guideWrapper.append('rect')
         .attr('class', 'guide')
         .attr('x', (candidateIndex * (width / numberOfCandidates)) + (hPadding / 2))
         .attr('y', roundIndex * vPadding)
         .attr('width', (width / numberOfCandidates) - hPadding)
         .attr('height', rowHeight);
 
-      svg.append('line')
+      guideWrapper.append('line')
         .attr('class', 'threshold')
         .attr('x1', (candidateIndex * (width / numberOfCandidates)) + (hPadding / 2) + x(.5))
         .attr('x2', (candidateIndex * (width / numberOfCandidates)) + (hPadding / 2) + x(.5))
@@ -116,7 +119,9 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
   cumulativeVotesOut = resetCumulativeVotes();
 
   enter.append('path')
-    .attr('class', function(d) { return 'vote-line vote-line-round-' + roundIndex; })
+    .attr('class', function(d) {
+      return 'vote-line vote-line-round-' + roundIndex + ' vote-line-from-' + d.from + '-to-' + d.to;
+    })
     .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
     .attr('transform', function(d) {
       return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
@@ -143,7 +148,7 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
       cumulativeVotesOut = resetCumulativeVotes();
 
       enter.append('path')
-        .attr('class', 'vote-line vote-line-finish-round-' + roundIndex)
+        .attr('class', function(d) { return 'vote-line vote-line-finish-round-' + roundIndex + ' vote-line-finish-candidate-' + d.to; })
         .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
         .attr('transform', function(d) {
           return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
@@ -262,35 +267,113 @@ function showRoundFinish(roundIndex, callback) {
   if (callback) window.setTimeout(callback, duration);
 }
 
-showRoundChart(0, function() {
-  showRound(0, function() {
-    showRoundChart(1, function() {
-      showRound(1, function() {
-        showRoundFinish(1);
-      });
-    });
-  });
-});
-
 var annotations = svg.append('g')
   .attr('class', 'annotations')
 
-annotations.append('line')
+var a0 = annotations.append('g')
+  .attr('class', 'annotation annotation-0')
+
+a0.append('line')
   .attr('class', 'leader-line')
   .attr('x1', (hPadding / 2) + x(.5))
   .attr('x2', (hPadding / 2) + x(.5))
   .attr('y1', rowHeight + 4)
   .attr('y2', rowHeight + 18)
 
-annotations.append('text')
-  .attr('class', 'annotation')
+a0.append('text')
   .attr('x', (hPadding / 2) + x(.5) - 6)
   .attr('y', rowHeight + 30)
   .text('Threshold to win')
 
-annotations.append('text')
-  .attr('class', 'annotation')
+a0.append('text')
   .attr('x', (hPadding / 2) + x(.5) - 6)
   .attr('y', rowHeight + 44)
   .text('(50 percent plus one vote)')
+
+d3.select('.btn-next')
+  .on('click', nextStage);
+
+d3.select('.btn-previous')
+  .on('click', previousStage);
+
+var currentStage = 0;
+var explanationD3 = d3.select('.explanation');
+
+var stages = [
+  function() {
+    d3.selectAll('.round-label-round-0, .guide-wrapper-round-0, .annotation-0')
+      .style('display', 'block')
+    explanationD3.text('Voters mark their first, second and third choice candidates on their ballots.');
+  },
+  function() {
+    window.setTimeout(function() {
+      showRoundChart(0, function() {
+        window.setTimeout(function() {
+          d3.selectAll('.round-label-round-1, .guide-wrapper-round-1')
+            .style('display', 'block')
+        }, 500)
+      })
+    }, 500);
+    explanationD3.text('If any candidate wins a majority of first choice votes, he or she is the winner. Since no candidate reached the threshold, we continue to Round 2.');
+  },
+  function() {
+    showRound(0, function() {
+      showRoundChart(1);
+    });
+    explanationD3.text('The candidate with the least votes is eliminated. Votes for this candidate are redistributed based on voters\' second choice votes.');
+  },
+  function() {
+    d3.select('.vote-line-round-0.vote-line-from-1-to-0')
+      .classed('vote-line-active', true);
+    explanationD3.text('For example, if Joe voted first choice for Candidate B and second for Candidate A, his vote has moved to Candidate A.');
+  },
+  function() {
+    d3.select('.vote-line-round-0.vote-line-from-1-to-0')
+      .classed('vote-line-active', false);
+
+    d3.selectAll('.round-label-round-2, .guide-wrapper-round-2')
+      .style('display', 'block')
+    showRound(1, function() {
+      showRoundFinish(1, function() {
+        d3.selectAll('.guide-wrapper-round-2.guide-wrapper-candidate-0 rect,.guide-wrapper-round-2.guide-wrapper-candidate-0 line')
+          .transition()
+          .style('stroke', '#333')
+        d3.selectAll('.vote-line-finish-candidate-0')
+          .transition()
+          .style('stroke-opacity', 0.7);
+      })
+    });
+    explanationD3.text('With that redistribution, Candidate A reached the threshold, and thus is the winner.');
+  }
+];
+
+function nextStage() {
+  if (currentStage + 1 < stages.length) {
+    currentStage++;
+    stages[currentStage]();
+    checkStageButtons();
+  }
+}
+
+function previousStage() {
+  if (currentStage - 1 >= 0) {
+    currentStage--;
+    stages[currentStage]();
+    checkStageButtons();
+  }
+}
+
+function checkStageButtons() {
+  d3.selectAll('.btn-inactive')
+    .classed('btn-inactive', false);
+  if (currentStage === 0) {
+    d3.select('.btn-previous')
+      .classed('btn-inactive', true);
+  } else if (currentStage === stages.length - 1) {
+    d3.select('.btn-next')
+      .classed('btn-inactive', true);
+  }
+}
+
+stages[currentStage]();
 

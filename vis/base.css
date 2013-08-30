@@ -5,12 +5,12 @@
 .graphic {
   width: 960px;
   margin: auto;
+  color: #333;
 }
 
 .graphic h1 {
   font-family: Arial, sans-serif;
   font-size: 27px;
-  color: #333;
 }
 
 .btn {
@@ -37,6 +37,19 @@
   background-color: #ccc;
 }
 
+.explanation {
+  margin-left: 120px;
+  width: 400px;
+  height: 50px;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.chart {
+  margin: 20px 0;
+}
+
 .candidates {
   margin-left: 28px;
 }
@@ -55,17 +68,22 @@
   opacity: 0.2;
 }
 
-.label {
+.round-label {
   font-family: Arial, sans-serif;
   font-size: 13px;
   fill: #333;
   stroke: none;
+  display: none;
+}
+.guide-wrapper {
+  display: none;
 }
 .annotation {
   font-family: Arial, sans-serif;
   font-size: 12px;
   fill: #666;
   stroke: none;
+  display: none;
 }
 .leader-line {
   stroke: #666;
@@ -90,5 +108,8 @@
   fill: none;
   stroke: #58794F;
   stroke-opacity: 0.5;
+}
+.vote-line-active {
+  stroke-opacity: 0.9;
 }
 
