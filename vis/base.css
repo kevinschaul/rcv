@@ -99,12 +99,12 @@
 .annotation {
   font-family: Arial, sans-serif;
   font-size: 12px;
-  fill: #666;
+  fill: #999;
   stroke: none;
   display: none;
 }
 .leader-line {
-  stroke: #666;
+  stroke: #999;
   stroke-width: 1px;
   shape-rendering: crispEdges;
 }
