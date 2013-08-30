@@ -26,11 +26,9 @@ var rowHeight = 15;
 var candidateWidth = width / (numberOfCandidates);
 
 var candidatesInContention = [];
-var cumulativeVotes = [];
 
 for (var i = 0; i < numberOfCandidates; i++) {
   candidatesInContention.push(true);
-  cumulativeVotes.push(0);
 }
 
 function resetCumulativeVotes() {
@@ -40,6 +38,9 @@ function resetCumulativeVotes() {
   }
   return _cumulativeVotes;
 }
+
+var cumulativeVotesIn = resetCumulativeVotes();
+var cumulativeVotesOut = resetCumulativeVotes();
 
 var x = d3.scale.linear()
   .domain([0, 1])
@@ -93,20 +94,22 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
       .data(data[roundIndex])
     .enter()
 
-  cumulativeVotes = resetCumulativeVotes();
+  cumulativeVotesIn = resetCumulativeVotes();
+  cumulativeVotesOut = resetCumulativeVotes();
 
   enter.append('path')
     .attr('class', 'vote-line')
     .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
     .attr('d', function(d) {
       var lineData = [];
-      var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.from]), roundIndex * vPadding];
-      var endPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.from]), roundIndex * vPadding + rowHeight];
+      var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding];
+      var endPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding + rowHeight];
 
       lineData.push(beginPoint);
       lineData.push(endPoint);
 
-      cumulativeVotes[d.from] += d.votes / totalVotes;
+      cumulativeVotesIn[d.to] += d.votes / totalVotes;
+      cumulativeVotesOut[d.from] += d.votes / totalVotes;
 
       return line(lineData);
     })
@@ -114,15 +117,16 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
       return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
     });
 
-  cumulativeVotes = resetCumulativeVotes();
+  cumulativeVotesIn = resetCumulativeVotes();
+  cumulativeVotesOut = resetCumulativeVotes();
 
   enter.append('path')
     .attr('class', 'vote-line')
     .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
     .attr('d', function(d) {
       var lineData = [];
-      var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotes[d.from]), roundIndex * vPadding + rowHeight];
-      var endPoint = [(d.to * candidateWidth) + x(cumulativeVotes[d.to]), (roundIndex + 1) * vPadding];
+      var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding + rowHeight];
+      var endPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), (roundIndex + 1) * vPadding];
 
       var midPoint = [(beginPoint[0] + endPoint[0]) / 2, (beginPoint[1] + endPoint[1]) / 2];
       var preMidPoint = [beginPoint[0], beginPoint[1] + (vPadding / 3)];
@@ -134,7 +138,8 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
       lineData.push(postMidPoint);
       lineData.push(endPoint);
 
-      cumulativeVotes[d.from] += d.votes / totalVotes;
+      cumulativeVotesIn[d.to] += d.votes / totalVotes;
+      cumulativeVotesOut[d.from] += d.votes / totalVotes;
 
       return line(lineData);
     })
@@ -143,20 +148,22 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
     })
 
     if (roundIndex === numberOfRounds - 2) {
-      cumulativeVotes = resetCumulativeVotes();
+      cumulativeVotesIn = resetCumulativeVotes();
+      cumulativeVotesOut = resetCumulativeVotes();
 
       enter.append('path')
         .attr('class', 'vote-line')
         .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
         .attr('d', function(d) {
           var lineData = [];
-          var beginPoint = [(d.to * candidateWidth) + x(cumulativeVotes[d.to]), (roundIndex + 1) * vPadding];
-          var endPoint = [(d.to * candidateWidth) + x(cumulativeVotes[d.to]), ((roundIndex + 1) * vPadding + rowHeight)];
+          var beginPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), (roundIndex + 1) * vPadding];
+          var endPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), ((roundIndex + 1) * vPadding + rowHeight)];
 
           lineData.push(beginPoint);
           lineData.push(endPoint);
 
-          cumulativeVotes[d.from] += d.votes / totalVotes;
+          cumulativeVotesIn[d.to] += d.votes / totalVotes;
+          cumulativeVotesOut[d.from] += d.votes / totalVotes;
 
           return line(lineData);
         })

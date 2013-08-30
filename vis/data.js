@@ -125,7 +125,7 @@ window.data = [
     }, {
       votes: 1,
       from: 10,
-      to: 16
+      to: 4
     }, {
       votes: 2,
       from: 13,
@@ -157,17 +157,17 @@ window.data = [
       from: 11,
       to: 11
     }, {
-      votes: 28,
+      votes: 34,
       from: 16,
-      to: 16
-    }, {
-      votes: 2,
-      from: 0,
       to: 16
     }, {
       votes: 1,
       from: 0,
       to: 8
+    }, {
+      votes: 2,
+      from: 0,
+      to: 16
     }, {
       votes: 1,
       from: 15,
@@ -187,10 +187,6 @@ window.data = [
       from: 1,
       to: 1
     }, {
-      votes: 19,
-      from: 8,
-      to: 8
-    }, {
       votes: 37,
       from: 16,
       to: 16
@@ -200,7 +196,23 @@ window.data = [
       to: 1
     }, {
       votes: 1,
+      from: 4,
+      to: 1
+    }, {
+      votes: 19,
+      from: 8,
+      to: 8
+    }, {
+      votes: 1,
       from: 2,
+      to: 8
+    }, {
+      votes: 5,
+      from: 11,
+      to: 8
+    }, {
+      votes: 3,
+      from: 4,
       to: 8
     }, {
       votes: 2,
@@ -209,19 +221,7 @@ window.data = [
     }, {
       votes: 1,
       from: 4,
-      to: 1
-    }, {
-      votes: 3,
-      from: 4,
-      to: 8
-    }, {
-      votes: 1,
-      from: 4,
       to: 16
-    }, {
-      votes: 5,
-      from: 11,
-      to: 8
     }, {
       votes: 2,
       from: 11,
@@ -233,13 +233,13 @@ window.data = [
       from: 1,
       to: 1
     }, {
-      votes: 42,
-      from: 16,
-      to: 16
-    }, {
       votes: 13,
       from: 8,
       to: 1
+    }, {
+      votes: 42,
+      from: 16,
+      to: 16
     }, {
       votes: 17,
       from: 8,
