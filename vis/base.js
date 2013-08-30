@@ -103,9 +103,15 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
     .attr('d', function(d) {
       var lineData = [];
       var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding];
+      var endPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding + rowHeight];
 
-      lineData.push(beginPoint);
-      lineData.push(beginPoint);
+      if (roundIndex === 0) {
+        lineData.push(beginPoint);
+        lineData.push(endPoint);
+      } else {
+        lineData.push(beginPoint);
+        lineData.push(beginPoint);
+      }
 
       cumulativeVotesIn[d.to] += d.votes / totalVotes;
       cumulativeVotesOut[d.from] += d.votes / totalVotes;
