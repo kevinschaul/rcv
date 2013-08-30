@@ -15,7 +15,7 @@ var totalVotes = 77;
 var numberOfRounds = 3;
 var numberOfCandidates = 4;
 var hPadding = 100;
-var vPadding = 200;
+var vPadding = 180;
 var rowHeight = 30;
 var candidateWidth = width / (numberOfCandidates);
 
