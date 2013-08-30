@@ -167,6 +167,12 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
 d3.selectAll('.vote-line')
   .on('mouseover', function(d) {
     console.log(d);
+    d3.select(this)
+      .style('stroke', '#022505')
+  })
+  .on('mouseout', function(d) {
+    d3.select(this)
+      .style('stroke', '#58794F')
   });
 
 function showRoundChart(roundIndex, callback) {
