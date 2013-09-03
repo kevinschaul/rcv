@@ -183,14 +183,14 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
     }
 });
 
-d3.selectAll('.vote-line-between-rounds')
+svg.selectAll('.vote-line-between-rounds')
   .on('mouseover', function(d) {
     console.log(d);
-    d3.select(this)
+    svg.select(this)
       .style('stroke', '#022505')
   })
   .on('mouseout', function(d) {
-    d3.select(this)
+    svg.select(this)
       .style('stroke', '#58794F')
   });
 
@@ -200,7 +200,7 @@ function showRoundChart(roundIndex, callback) {
   cumulativeVotesIn = resetCumulativeVotes();
   cumulativeVotesOut = resetCumulativeVotes();
 
-  d3.selectAll('.vote-line-chart-round-' + roundIndex)
+  svg.selectAll('.vote-line-chart-round-' + roundIndex)
   .transition()
     .ease('linear')
     .duration(duration)
@@ -227,7 +227,7 @@ function showRoundSame(roundIndex, callback) {
   cumulativeVotesIn = resetCumulativeVotes();
   cumulativeVotesOut = resetCumulativeVotes();
 
-  d3.selectAll('.vote-line-round-' + roundIndex + '.vote-line-same')
+  svg.selectAll('.vote-line-round-' + roundIndex + '.vote-line-same')
   .transition()
     .ease('linear')
     .duration(duration)
@@ -258,7 +258,7 @@ function showRoundSame(roundIndex, callback) {
 function showRoundDifferent(roundIndex, callback) {
   var duration = 1500;
 
-  d3.selectAll('.vote-line-round-' + roundIndex + '.vote-line-different')
+  svg.selectAll('.vote-line-round-' + roundIndex + '.vote-line-different')
   .transition()
     .ease('linear')
     .duration(duration)
@@ -292,7 +292,7 @@ function showRoundFinish(roundIndex, callback) {
   cumulativeVotesIn = resetCumulativeVotes();
   cumulativeVotesOut = resetCumulativeVotes();
 
-  d3.selectAll('.vote-line-finish-round-' + roundIndex)
+  svg.selectAll('.vote-line-finish-round-' + roundIndex)
     .transition()
     .duration(duration)
     .attr('d', function(d) {
@@ -345,10 +345,10 @@ var allowClick = true;
 
 var stages = [
   function() {
-    d3.selectAll('.round-label-round-0, .guide-wrapper-round-0')
+    svg.selectAll('.round-label-round-0, .guide-wrapper-round-0')
       .style('display', 'block')
 
-    d3.selectAll('.annotation-0')
+    svg.selectAll('.annotation-0')
       .style('display', 'block')
 
     allowClick = false;
@@ -359,7 +359,7 @@ var stages = [
     explanationD3.text('Voters mark their first, second and third choice candidates on their ballots. If any candidate wins a majority of first choice votes, he or she is the winner.');
   },
   function() {
-    d3.selectAll('.round-label-round-1, .guide-wrapper-round-1')
+    svg.selectAll('.round-label-round-1, .guide-wrapper-round-1')
       .style('display', 'block')
 
     allowClick = false;
@@ -383,15 +383,15 @@ var stages = [
     explanationD3.text('Votes for eliminated candidates are redistributed based on voters\' second or third choice votes.');
   },
   function() {
-    d3.select('.vote-line-round-0.vote-line-from-1-to-3')
+    svg.select('.vote-line-round-0.vote-line-from-1-to-3')
       .classed('vote-line-active', true);
     explanationD3.text('For example, if Joe voted first choice for Candidate B and second choice for Candidate D, his vote would have moved to Candidate D.');
   },
   function() {
-    d3.select('.vote-line-round-0.vote-line-from-1-to-3')
+    svg.select('.vote-line-round-0.vote-line-from-1-to-3')
       .classed('vote-line-active', false);
 
-    d3.selectAll('.round-label-round-2, .guide-wrapper-round-2')
+    svg.selectAll('.round-label-round-2, .guide-wrapper-round-2')
       .style('display', 'block')
 
     allowClick = false;
@@ -410,10 +410,10 @@ var stages = [
   function() {
     allowClick = false;
     showRoundFinish(1, function() {
-      d3.selectAll('.guide-wrapper-round-2.guide-wrapper-candidate-2 rect,.guide-wrapper-round-2.guide-wrapper-candidate-2 line')
+      svg.selectAll('.guide-wrapper-round-2.guide-wrapper-candidate-2 rect,.guide-wrapper-round-2.guide-wrapper-candidate-2 line')
         .transition()
         .style('stroke', '#333')
-      d3.selectAll('.vote-line-finish-candidate-2')
+      svg.selectAll('.vote-line-finish-candidate-2')
         .transition()
         .style('stroke-opacity', 0.7);
       allowClick = true;
@@ -421,21 +421,21 @@ var stages = [
     explanationD3.text('With this redistribution, Candidate C reached the threshold, and thus is the winner.');
   },
   function() {
-    d3.selectAll('.guide-wrapper-round-2.guide-wrapper-candidate-2 rect,.guide-wrapper-round-2.guide-wrapper-candidate-2 line')
+    svg.selectAll('.guide-wrapper-round-2.guide-wrapper-candidate-2 rect,.guide-wrapper-round-2.guide-wrapper-candidate-2 line')
       .style('stroke', '#999')
-    d3.selectAll('.vote-line-finish-candidate-2')
+    svg.selectAll('.vote-line-finish-candidate-2')
       .style('stroke-opacity', 0.5);
 
-    d3.selectAll('.vote-line-chart-round-0')
+    svg.selectAll('.vote-line-chart-round-0')
       .transition()
       .style('stroke-opacity', 0.7);
     explanationD3.text('Although Candidate A earned the most first choice votes, he lost the election.');
   },
   function() {
-    d3.selectAll('.vote-line-chart-round-0')
+    svg.selectAll('.vote-line-chart-round-0')
       .style('stroke-opacity', 0.5);
 
-    d3.selectAll('.vote-line-round-1.vote-line-from-3-to-2')
+    svg.selectAll('.vote-line-round-1.vote-line-from-3-to-2')
       .transition()
       .style('stroke-opacity', 0.7);
     explanationD3.text('Ranked choice voting promotes positive campaigns by giving incentives to "teaming up" with other candidates. Here, Candidate C benefited greatly from voters who also liked Candidate D.');
@@ -546,24 +546,25 @@ annotations.append('text')
 
 })();
 
+
 var margin = { top: 10, right: 10, bottom: 10, left: 30 };
 var width = 960 - margin.left - margin.right;
-var height = 450 - margin.top - margin.bottom;
+var height = 1000 - margin.top - margin.bottom;
 
 var svg = d3.select('.target-2').append('svg')
   .attr('width', 960)
-  .attr('height', 450)
+  .attr('height', 1000)
     .append('g')
   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-var data20 = window.data20 || [];
-console.log(data20);
+var data = window.data20 || [];
+console.log(data);
 
-var totalVotes = 77;
-var numberOfRounds = 3;
-var numberOfCandidates = 4;
-var hPadding = 100;
-var vPadding = 180;
+var totalVotes = 100;
+var numberOfRounds = 6;
+var numberOfCandidates = 20;
+var hPadding = 10;
+var vPadding = 140;
 var rowHeight = 30;
 var candidateWidth = width / (numberOfCandidates);
 
@@ -653,13 +654,8 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
       var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding];
       var endPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding + rowHeight];
 
-      if (roundIndex === 0) {
-        lineData.push(beginPoint);
-        lineData.push(endPoint);
-      } else {
-        lineData.push(beginPoint);
-        lineData.push(beginPoint);
-      }
+      lineData.push(beginPoint);
+      lineData.push(endPoint);
 
       cumulativeVotesIn[d.to] += d.votes / totalVotes;
       cumulativeVotesOut[d.from] += d.votes / totalVotes;
@@ -688,14 +684,18 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
     })
     .attr('d', function(d) {
       var lineData = [];
-      var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesInitialOut[d.from]), roundIndex * vPadding + rowHeight];
+      var beginPoint = [(d.from * candidateWidth) + x(cumulativeVotesOut[d.from]), roundIndex * vPadding + rowHeight];
+      var endPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), (roundIndex + 1) * vPadding];
+
+      var midPoint = [(beginPoint[0] + endPoint[0]) / 2, (beginPoint[1] + endPoint[1]) / 2];
       var preMidPoint = [beginPoint[0], beginPoint[1] + (vPadding / 3)];
+      var postMidPoint = [endPoint[0], endPoint[1] - (vPadding / 3)];
 
       lineData.push(beginPoint);
-      lineData.push(beginPoint);
-      lineData.push(beginPoint);
-      lineData.push(beginPoint);
-      lineData.push(beginPoint);
+      lineData.push(preMidPoint);
+      lineData.push(midPoint);
+      lineData.push(postMidPoint);
+      lineData.push(endPoint);
 
       cumulativeVotesInitialIn[d.to] += d.votes / totalVotes;
       cumulativeVotesInitialOut[d.from] += d.votes / totalVotes;
@@ -719,7 +719,7 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
           var endPoint = [(d.to * candidateWidth) + x(cumulativeVotesIn[d.to]), ((roundIndex + 1) * vPadding + rowHeight)];
 
           lineData.push(beginPoint);
-          lineData.push(beginPoint);
+          lineData.push(endPoint);
 
           cumulativeVotesIn[d.to] += d.votes / totalVotes;
           cumulativeVotesOut[d.from] += d.votes / totalVotes;
