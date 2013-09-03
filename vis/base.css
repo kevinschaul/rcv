@@ -140,7 +140,6 @@ body {
   font-size: 12px;
   fill: #666;
   stroke: none;
-  display: none;
 }
 .leader-line {
   stroke: #999;
@@ -179,5 +178,41 @@ body {
   margin-right: 100px;
   width: 380px;
   float: left;
+}
+
+.axis {
+  fill: none;
+  stroke: #666;
+  shape-rendering: crispEdges;
+}
+.axis text {
+  fill: #666;
+  stroke: none;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+}
+.domain {
+  stroke: none;
+}
+.x-axis .tick line {
+  stroke: none;
+}
+.y-axis .tick {
+  stroke: #aaa;
+}
+.line {
+  fill: none;
+  stroke: #58794F;
+  stroke-width: 4px;
+}
+
+.annotation-graph {
+  font-size: 11px;
+}
+.annotation-circle {
+  fill: #58794F;
+  fill-opacity: 0.2;
+  stroke: #333;
+  stroke-width: 1px;
 }
 
