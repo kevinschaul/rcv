@@ -125,26 +125,24 @@ rcvChart = {
             .attr('y2', (roundIndex * self.vPadding) + self.rowHeight);
         }
         self.candidatesInContention[candidateIndex] = _.find(
-            self.data[roundIndex], function(d) {
+            self.data[roundIndex][1], function(d) {
           return d.to === candidateIndex;
         });
 
       });
 
-      var enter = self.svg.append('g')
-        .attr('class', 'round round-' + roundIndex)
-        .selectAll('path')
-          .data(data[roundIndex])
-        .enter()
-
       // Draw each vote line chart
       var cumulativeVotesIn = self.getFreshCumulativeVotes();
       var cumulativeVotesOut = self.getFreshCumulativeVotes();
 
-      enter.append('path')
+      self.svg.append('g')
+        .attr('class', 'round round-' + roundIndex)
+        .selectAll('path')
+        .data(data[roundIndex][0])
+          .enter().append('path')
         .attr('class', function(d) {
           var s = 'vote-line vote-line-chart-round-' + roundIndex;
-          if (d.originalFrom) {
+          if (d.original) {
             s += ' vote-line-original';
           }
           return s;
@@ -182,7 +180,11 @@ rcvChart = {
         var cumulativeVotesIn = self.getFreshCumulativeVotes();
         var cumulativeVotesOut = self.getFreshCumulativeVotes();
 
-        enter.append('path')
+        self.svg.append('g')
+          .attr('class', 'round round-' + roundIndex)
+          .selectAll('path')
+          .data(data[roundIndex][1])
+            .enter().append('path')
           .attr('class', function(d) {
             var s = 'vote-line vote-line-between-rounds' + 
              ' vote-line-round-' + roundIndex + ' vote-line-from-' + d.from +
