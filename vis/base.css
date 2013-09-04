@@ -131,10 +131,8 @@ body {
   font-size: 13px;
   fill: #333;
   stroke: none;
-  display: none;
 }
 .guide-wrapper {
-  display: none;
 }
 .annotation {
   font-family: Arial, sans-serif;
@@ -163,11 +161,14 @@ body {
 }
 .vote-line {
   fill: none;
-  stroke: #58794F;
+  stroke: #334561;
   stroke-opacity: 0.5;
 }
 .vote-line-active {
   stroke-opacity: 0.9;
+}
+.vote-line-original {
+  stroke: #58794F;
 }
 
 .col1 {

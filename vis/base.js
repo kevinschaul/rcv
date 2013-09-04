@@ -1,103 +1,272 @@
-(function() {
+rcvChart = {
+  /* Options */
+  margin: { top: 10, right: 10, bottom: 10, left: 30 },
+  width: 960,
+  height: 450,
 
-var margin = { top: 10, right: 10, bottom: 10, left: 30 };
-var width = 960 - margin.left - margin.right;
-var height = 450 - margin.top - margin.bottom;
+  hPadding: 100,
+  vPadding: 180,
+  rowHeight: 30,
 
-var svg = d3.select('.target-0').append('svg')
-  .attr('width', 960)
-  .attr('height', 450)
-    .append('g')
-  .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+  // TODO These can be computed
+  totalVotes: 77,
+  numberOfRounds: 3,
+  numberOfCandidates: 4,
 
-var data = window.data || [];
-console.log(data);
+  /* Computed */
+  candidateWidth: null,
+  candidatesInContention: [],
+  svg: null,
 
-var totalVotes = 77;
-var numberOfRounds = 3;
-var numberOfCandidates = 4;
-var hPadding = 100;
-var vPadding = 180;
-var rowHeight = 30;
-var candidateWidth = width / (numberOfCandidates);
+  init: function(_id, _data) {
+    var self = this;
 
-var candidatesInContention = [];
+    self.id = _id;
+    self.data = _data;
 
-for (var i = 0; i < numberOfCandidates; i++) {
-  candidatesInContention.push(true);
-}
+    self.initData();
+    self.initSvg();
 
-function resetCumulativeVotes() {
-  var _cumulativeVotes = [];
-  for (var i = 0; i < numberOfCandidates; i++) {
-    _cumulativeVotes.push(0);
-  }
-  return _cumulativeVotes;
-}
+    self.drawRoundLabels();
+    self.drawChart();
 
-var cumulativeVotesIn = resetCumulativeVotes();
-var cumulativeVotesOut = resetCumulativeVotes();
+    return self;
+  },
 
-var x = d3.scale.linear()
-  .domain([0, 1])
-  .range([0, (width / numberOfCandidates - hPadding)]);
+  initData: function() {
+    var self = this;
 
-_.each(_.range(0, numberOfRounds), function(roundIndex) {
-  // Label rounds
-  svg.append('text')
-    .attr('class', 'round-label round-label-round-' + roundIndex)
-    .attr('x', -(margin.left) + 10)
-    .attr('y', (roundIndex * vPadding) + (rowHeight / 2) + 5)
-    .text('Round ' + (roundIndex + 1))
-});
+    self.width -= self.margin.left - self.margin.right;
+    self.height -= self.margin.top - self.margin.bottom;
+    self.candidateWidth = self.width / self.numberOfCandidates;
 
-var line = d3.svg.line()
-  .x(function(d, i) {
-    return d[0];
-  })
-  .y(function(d, i) {
-    return d[1];
-  })
-  .interpolate('basis');
-
-_.each(_.range(0, numberOfRounds), function(roundIndex) {
-
-  // Draw bar chart if candidate has not yet been eliminated
-  _.each(_.range(0, numberOfCandidates), function(candidateIndex) {
-    if (candidatesInContention[candidateIndex]) {
-      var guideWrapper = svg.append('g')
-        .attr('class', 'guide-wrapper guide-wrapper-round-' + roundIndex + ' guide-wrapper-candidate-' + candidateIndex)
-
-      guideWrapper.append('rect')
-        .attr('class', 'guide')
-        .attr('x', (candidateIndex * (width / numberOfCandidates)) + (hPadding / 2))
-        .attr('y', roundIndex * vPadding)
-        .attr('width', (width / numberOfCandidates) - hPadding)
-        .attr('height', rowHeight);
-
-      guideWrapper.append('line')
-        .attr('class', 'threshold')
-        .attr('x1', (candidateIndex * (width / numberOfCandidates)) + (hPadding / 2) + x(.5))
-        .attr('x2', (candidateIndex * (width / numberOfCandidates)) + (hPadding / 2) + x(.5))
-        .attr('y1', roundIndex * vPadding)
-        .attr('y2', (roundIndex * vPadding) + rowHeight);
+    for (var i = 0; i < self.numberOfCandidates; i++) {
+      self.candidatesInContention.push(true);
     }
-    candidatesInContention[candidateIndex] = _.find(data[roundIndex], function(d) {
-      return d.to === candidateIndex;
+
+  },
+
+  initSvg: function() {
+    var self = this;
+
+    self.svg = d3.select(self.id).append('svg')
+      .attr('width', 960)
+      .attr('height', 450)
+        .append('g')
+      .attr('transform',
+          'translate(' + self.margin.left + ',' + self.margin.top + ')')
+
+    self.x = d3.scale.linear()
+      .domain([0, 1])
+      .range([0, (self.width / self.numberOfCandidates - self.hPadding)]);
+
+    self.line = d3.svg.line()
+      .x(function(d, i) {
+        return d[0];
+      })
+      .y(function(d, i) {
+        return d[1];
+      })
+      .interpolate('basis');
+
+  },
+
+  drawRoundLabels: function() {
+    var self = this;
+
+    var roundLabels = self.svg.append('g')
+      .attr('class', 'round-labels');
+
+    _.each(_.range(0, self.numberOfRounds), function(roundIndex) {
+      // Label rounds
+      roundLabels.append('text')
+        .attr('class', 'round-label round-label-round-' + roundIndex)
+        .attr('x', -(self.margin.left) + 10)
+        .attr('y', (roundIndex * self.vPadding) +
+            (self.rowHeight / 2) + 5)
+        .text('Round ' + (roundIndex + 1));
     });
-  });
+  },
 
-  var enter = svg.append('g')
-    .attr('class', 'round round-' + roundIndex)
-    .selectAll('path')
-      .data(data[roundIndex])
-    .enter()
+  drawChart: function() {
+    var self = this;
 
-  cumulativeVotesIn = resetCumulativeVotes();
-  cumulativeVotesOut = resetCumulativeVotes();
+    // For each round ...
+    _.each(_.range(0, self.numberOfRounds), function(roundIndex) {
+
+      // For each candidate ...
+      _.each(_.range(0, self.numberOfCandidates), function(candidateIndex) {
+        if (self.candidatesInContention[candidateIndex]) {
+          var guideWrapper = self.svg.append('g')
+            .attr('class', function(d) {
+              var s = 'guide-wrapper guide-wrapper-round-' + roundIndex +
+                ' guide-wrapper-candidate-' + candidateIndex;
+              return s;
+            });
+
+          guideWrapper.append('rect')
+            .attr('class', 'guide')
+            .attr('x', (candidateIndex *
+                (self.width / self.numberOfCandidates)) + (self.hPadding / 2))
+            .attr('y', roundIndex * self.vPadding)
+            .attr('width', (self.width / self.numberOfCandidates) -
+                self.hPadding)
+            .attr('height', self.rowHeight);
+
+          guideWrapper.append('line')
+            .attr('class', 'threshold')
+            .attr('x1', (candidateIndex *
+                (self.width / self.numberOfCandidates)) + (self.hPadding / 2) +
+                self.x(.5))
+            .attr('x2', (candidateIndex *
+                (self.width / self.numberOfCandidates)) + (self.hPadding / 2) +
+                self.x(.5))
+            .attr('y1', roundIndex * self.vPadding)
+            .attr('y2', (roundIndex * self.vPadding) + self.rowHeight);
+        }
+        self.candidatesInContention[candidateIndex] = _.find(
+            self.data[roundIndex], function(d) {
+          return d.to === candidateIndex;
+        });
+
+      });
+
+      var enter = self.svg.append('g')
+        .attr('class', 'round round-' + roundIndex)
+        .selectAll('path')
+          .data(data[roundIndex])
+        .enter()
+
+      // Draw each vote line chart
+      var cumulativeVotesIn = self.getFreshCumulativeVotes();
+      var cumulativeVotesOut = self.getFreshCumulativeVotes();
+
+      enter.append('path')
+        .attr('class', function(d) {
+          var s = 'vote-line vote-line-chart-round-' + roundIndex;
+          if (d.originalFrom) {
+            s += ' vote-line-original';
+          }
+          return s;
+        })
+        .style('stroke-width', function(d) {
+          return self.x(d.votes / self.totalVotes);
+        })
+        .attr('transform', function(d) {
+          return 'translate(' + ((self.x(d.votes / self.totalVotes) +
+              self.hPadding) / 2) + ',0)';
+        })
+        .attr('d', function(d) {
+          var lineData = [];
+          var beginPoint = [(d.from * self.candidateWidth) +
+              self.x(cumulativeVotesOut[d.from]),
+              roundIndex * self.vPadding];
+          var endPoint = [(d.from * self.candidateWidth) +
+              self.x(cumulativeVotesOut[d.from]),
+              roundIndex * self.vPadding + self.rowHeight];
+
+          lineData.push(beginPoint);
+          lineData.push(endPoint);
+
+          cumulativeVotesIn[d.to] += d.votes / self.totalVotes;
+          cumulativeVotesOut[d.from] += d.votes / self.totalVotes;
+
+          return self.line(lineData);
+        })
+        .on('mouseover', self.mouseover)
+
+      // If not the last round, draw each vote line
+      if (roundIndex + 1 < self.numberOfRounds) {
+        var cumulativeVotesInitialIn = self.getFreshCumulativeVotes();
+        var cumulativeVotesInitialOut = self.getFreshCumulativeVotes();
+        var cumulativeVotesIn = self.getFreshCumulativeVotes();
+        var cumulativeVotesOut = self.getFreshCumulativeVotes();
+
+        enter.append('path')
+          .attr('class', function(d) {
+            var s = 'vote-line vote-line-between-rounds' + 
+             ' vote-line-round-' + roundIndex + ' vote-line-from-' + d.from +
+             '-to-' + d.to;
+            if (d.from === d.to) {
+              s += ' vote-line-same';
+            } else {
+              s += ' vote-line-different';
+            }
+            if (d.originalTo) {
+              s += ' vote-line-original';
+            }
+            return s;
+          })
+          .style('stroke-width', function(d) {
+            return self.x(d.votes / self.totalVotes);
+          })
+          .attr('transform', function(d) {
+            return 'translate(' + ((self.x(d.votes / self.totalVotes) +
+                self.hPadding) / 2) + ',0)';
+          })
+          .attr('d', function(d) {
+            var lineData = [];
+            var beginPoint = [(d.from * self.candidateWidth) +
+                self.x(cumulativeVotesInitialOut[d.from]),
+                roundIndex * self.vPadding + self.rowHeight];
+            var endPoint = [(d.to * self.candidateWidth) +
+                self.x(cumulativeVotesInitialIn[d.to]),
+                (roundIndex + 1) * self.vPadding];
+
+            var preMidPoint = [beginPoint[0], beginPoint[1] +
+                (self.vPadding / 3)];
+            var midPoint = [(beginPoint[0] + endPoint[0]) / 2,
+                (beginPoint[1] + endPoint[1]) / 2];
+            var postMidPoint = [endPoint[0],
+                endPoint[1] - (self.vPadding / 3)];
+
+            lineData.push(beginPoint);
+            lineData.push(preMidPoint);
+            lineData.push(midPoint);
+            lineData.push(postMidPoint);
+            lineData.push(endPoint);
+
+            cumulativeVotesInitialIn[d.to] += d.votes / self.totalVotes;
+            cumulativeVotesInitialOut[d.from] += d.votes / self.totalVotes;
+
+            return self.line(lineData);
+          })
+          .on('mouseover', self.mouseover)
+      }
+
+    });
+  },
+
+  mouseover: function(d) {
+    console.log(d);
+  },
+
+  getFreshCumulativeVotes: function() {
+    var self = this;
+
+    var _cumulativeVotes = [];
+    for (var i = 0; i < self.numberOfCandidates; i++) {
+      _cumulativeVotes.push(0);
+    }
+    return _cumulativeVotes;
+  },
+
+};
+
+r = rcvChart.init('.target-0', data);
+
+/*
+(function() {
+_.each(_.range(0, numberOfRounds), function(roundIndex) {
 
   enter.append('path')
-    .attr('class', 'vote-line vote-line-chart-round-' + roundIndex)
+    .attr('class', function(d) {
+      var s = 'vote-line vote-line-chart-round-' + roundIndex;
+      if (d.eliminated) {
+        s += ' vote-line-eliminated';
+      }
+      return s;
+    })
     .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
     .attr('transform', function(d) {
       return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
@@ -134,6 +303,9 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
       } else {
         c += ' vote-line-different';
       }
+      if (d.eliminated) {
+        c += ' vote-line-eliminated';
+      }
       return c;
     })
     .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
@@ -162,7 +334,13 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
       cumulativeVotesOut = resetCumulativeVotes();
 
       enter.append('path')
-        .attr('class', function(d) { return 'vote-line vote-line-finish-round-' + roundIndex + ' vote-line-finish-candidate-' + d.to; })
+        .attr('class', function(d) {
+          var s = 'vote-line vote-line-finish-round-' + roundIndex + ' vote-line-finish-candidate-' + d.to;
+          if (d.eliminated) {
+            s += ' vote-line-eliminated';
+          }
+          return s;
+        })
         .style('stroke-width', function(d) { return x(d.votes / totalVotes); })
         .attr('transform', function(d) {
           return 'translate(' + ((x(d.votes / totalVotes) + hPadding) / 2) + ',0)';
@@ -186,12 +364,12 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
 svg.selectAll('.vote-line-between-rounds')
   .on('mouseover', function(d) {
     console.log(d);
-    svg.select(this)
-      .style('stroke', '#022505')
+    d3.select(this)
+      .style('stroke-opacity', 0.7)
   })
   .on('mouseout', function(d) {
-    svg.select(this)
-      .style('stroke', '#58794F')
+    d3.select(this)
+      .style('stroke-opacity', 0.5)
   });
 
 function showRoundChart(roundIndex, callback) {
@@ -547,6 +725,8 @@ annotations.append('text')
 })();
 
 
+(function() {
+
 var margin = { top: 10, right: 10, bottom: 10, left: 30 };
 var width = 960 - margin.left - margin.right;
 var height = 1000 - margin.top - margin.bottom;
@@ -728,4 +908,7 @@ _.each(_.range(0, numberOfRounds), function(roundIndex) {
         })
     }
 });
+
+})();
+*/
 
