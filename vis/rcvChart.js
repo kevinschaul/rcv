@@ -1,4 +1,4 @@
-rcvChart = {
+var rcvChart = {
   /* Options */
   margin: { top: 10, right: 10, bottom: 10, left: 30 },
   width: 960,
