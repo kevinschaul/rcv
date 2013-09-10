@@ -369,7 +369,7 @@ rcvChart = {
       });
   },
 
-  undrawRoundBetween: function(roundIndex, callback) {
+  undrawRoundBetween: function(roundIndex, original, callback) {
     var self = this;
     var callbackCalled = false;
 
@@ -379,6 +379,9 @@ rcvChart = {
     var cumulativeVotesOut = self.getFreshCumulativeVotes();
 
     var s = '.vote-line-between-rounds.vote-line-round-' + roundIndex;
+    if (original) {
+      s += '.vote-line-original';
+    }
 
     self.svg.selectAll(s)
       .interrupt()

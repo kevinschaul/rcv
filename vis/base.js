@@ -2,6 +2,8 @@ var r = rcvChart.init('.target-0', data);
 var explanation = d3.select('.explanation');
 var controls = d3.select('.controls');
 
+var isTransitioning = false;
+
 d3.selectAll('.round-labels .round-label, .guide-wrapper')
   .style('opacity', 0);
 
@@ -10,18 +12,27 @@ var stages = [
   // The second function is for teardown
   [
     function() {
+      isTransitioning = true;
       r.drawRoundAnnotations(0);
-      r.drawRoundChart(0);
+      r.drawRoundChart(0, function() {
+        isTransitioning = false;
+      });
       explanation.text('Voters mark their first, second and third choice candidates on their ballots. If any candidate wins a majority of first choice votes, he or she is the winner.');
     },
     function() {
+      isTransitioning = true;
       r.undrawRoundAnnotations(0);
-      r.undrawRoundChart(0);
+      r.undrawRoundChart(0, function() {
+        isTransitioning = false;
+      });
     }
   ], [
     function() {
+      isTransitioning = true;
       r.drawRoundAnnotations(1);
-      r.drawRoundBetween(0, true);
+      r.drawRoundBetween(0, true, function() {
+        isTransitioning = false;
+      });
       explanation.text('Since no candidate reached the threshold, we continue to Round 2. The candidate with the least votes is eliminated.');
       controls
         .transition()
@@ -30,8 +41,11 @@ var stages = [
         .style('top', 330);
     },
     function() {
+      isTransitioning = true;
       r.undrawRoundAnnotations(1);
-      r.undrawRoundBetween(0);
+      r.undrawRoundBetween(0, true, function() {
+        isTransitioning = false;
+      });
       controls
         .transition()
         .ease('linear')
@@ -40,16 +54,22 @@ var stages = [
     }
   ], [
     function() {
+      isTransitioning = true;
       d3.select('.vote-line-round-0.vote-line-from-1-to-3')
         .classed('vote-line-active', false);
       r.drawRoundBetween(0, false, function() {
-        r.drawRoundChart(1);
+        r.drawRoundChart(1, function() {
+          isTransitioning = false;
+        });
       });
       explanation.text('Votes for eliminated candidates are redistributed based on voters\' second or third choice votes.');
     },
     function() {
+      isTransitioning = true;
       r.undrawRoundChart(1, function() {
-        r.undrawRoundBetween(0);
+        r.undrawRoundBetween(0, false, function() {
+          isTransitioning = false;
+        });
       });
     }
   ], [
@@ -64,12 +84,15 @@ var stages = [
     }
   ], [
     function() {
+      isTransitioning = true;
       d3.select('.vote-line-round-0.vote-line-from-1-to-3')
         .classed('vote-line-active', false);
       explanation.text('Still, no candidate has reached the threshold. The candidate with the least votes is eliminated again, with his or her votes redistributed.');
       r.drawRoundAnnotations(2);
       r.drawRoundBetween(1, true, function() {
-        r.drawRoundBetween(1, false);
+        r.drawRoundBetween(1, false, function() {
+          isTransitioning = false;
+        });
       });
       controls
         .transition()
@@ -78,8 +101,11 @@ var stages = [
         .style('top', 510);
     },
     function() {
+      isTransitioning = true;
       r.undrawRoundAnnotations(2);
-      r.undrawRoundBetween(1);
+      r.undrawRoundBetween(1, false, function() {
+        isTransitioning = false;
+      });
       controls
         .transition()
         .ease('linear')
@@ -88,9 +114,9 @@ var stages = [
     }
   ], [
     function() {
+      isTransitioning = true;
       explanation.text('With this redistribution, Candidate C reached the threshold and is the winner.');
       r.drawRoundChart(2, function() {
-        console.log('here');
         d3.selectAll('.vote-line-chart-round-2.vote-line-from-candidate-2')
           .transition()
           .ease('linear')
@@ -100,11 +126,17 @@ var stages = [
           .transition()
           .ease('linear')
           .duration(500)
-          .style('stroke', '#333');
+          .style('stroke', '#333')
+          .each('end', function() {
+            isTransitioning = false;
+          });
       });
     },
     function() {
-      r.undrawRoundChart(2);
+      isTransitioning = true;
+      r.undrawRoundChart(2, function() {
+        isTransitioning = false;
+      });
       d3.selectAll('.vote-line-chart-round-2.vote-line-from-candidate-2')
         .style('stroke-opacity', 0.5);
       d3.select('.guide-wrapper-round-2.guide-wrapper-candidate-2 .guide')
@@ -116,27 +148,29 @@ var stages = [
 var currentStage = 0;
 
 var setStage = function(stage) {
-  console.log('Setting stage: ', stage);
   stages[stage][0]();
 };
 
 var unsetStage = function(stage) {
-  console.log('Unsetting stage: ', stage);
   stages[stage][1]();
 };
 
 var previousStage = function() {
-  if (currentStage - 1 >= 0) {
-    unsetStage(currentStage);
-    currentStage -= 1;
-    setStage(currentStage);
+  if (!isTransitioning) {
+    if (currentStage - 1 >= 0) {
+      unsetStage(currentStage);
+      currentStage -= 1;
+      setStage(currentStage);
+    }
   }
 };
 
 var nextStage = function() {
-  if (currentStage + 1 < stages.length) {
-    currentStage += 1;
-    setStage(currentStage);
+  if (!isTransitioning) {
+    if (currentStage + 1 < stages.length) {
+      currentStage += 1;
+      setStage(currentStage);
+    }
   }
 };
 
