@@ -164,7 +164,7 @@ rcvChart = {
               roundIndex * self.vPadding + self.rowHeight];
 
           lineData.push(beginPoint);
-          lineData.push(endPoint);
+          lineData.push(beginPoint);
 
           cumulativeVotesIn[d.to] += d.votes / self.totalVotes;
           cumulativeVotesOut[d.from] += d.votes / self.totalVotes;
@@ -223,10 +223,10 @@ rcvChart = {
                 endPoint[1] - (self.vPadding / 3)];
 
             lineData.push(beginPoint);
-            lineData.push(preMidPoint);
-            lineData.push(midPoint);
-            lineData.push(postMidPoint);
-            lineData.push(endPoint);
+            lineData.push(beginPoint);
+            lineData.push(beginPoint);
+            lineData.push(beginPoint);
+            lineData.push(beginPoint);
 
             cumulativeVotesInitialIn[d.to] += d.votes / self.totalVotes;
             cumulativeVotesInitialOut[d.from] += d.votes / self.totalVotes;
@@ -237,6 +237,153 @@ rcvChart = {
       }
 
     });
+  },
+
+  drawRoundChart: function(roundIndex) {
+    var self = this;
+
+    var cumulativeVotesIn = self.getFreshCumulativeVotes();
+    var cumulativeVotesOut = self.getFreshCumulativeVotes();
+
+    self.svg.selectAll('.vote-line-chart-round-' + roundIndex)
+      .interrupt()
+      .transition()
+      .duration(500)
+      .attr('d', function(d) {
+        var lineData = [];
+        var beginPoint = [(d.from * self.candidateWidth) +
+            self.x(cumulativeVotesOut[d.from]),
+            roundIndex * self.vPadding];
+        var endPoint = [(d.from * self.candidateWidth) +
+            self.x(cumulativeVotesOut[d.from]),
+            roundIndex * self.vPadding + self.rowHeight];
+
+        lineData.push(beginPoint);
+        lineData.push(endPoint);
+
+        cumulativeVotesIn[d.to] += d.votes / self.totalVotes;
+        cumulativeVotesOut[d.from] += d.votes / self.totalVotes;
+
+        return self.line(lineData);
+      });
+  },
+
+  undrawRoundChart: function(roundIndex) {
+    var self = this;
+
+    var cumulativeVotesIn = self.getFreshCumulativeVotes();
+    var cumulativeVotesOut = self.getFreshCumulativeVotes();
+
+    self.svg.selectAll('.vote-line-chart-round-' + roundIndex)
+      .interrupt()
+      .transition()
+      .duration(500)
+      .attr('d', function(d) {
+        var lineData = [];
+        var beginPoint = [(d.from * self.candidateWidth) +
+            self.x(cumulativeVotesOut[d.from]),
+            roundIndex * self.vPadding];
+        var endPoint = [(d.from * self.candidateWidth) +
+            self.x(cumulativeVotesOut[d.from]),
+            roundIndex * self.vPadding + self.rowHeight];
+
+        lineData.push(beginPoint);
+        lineData.push(beginPoint);
+
+        cumulativeVotesIn[d.to] += d.votes / self.totalVotes;
+        cumulativeVotesOut[d.from] += d.votes / self.totalVotes;
+
+        return self.line(lineData);
+      });
+  },
+
+  drawRoundBetween: function(roundIndex, original) {
+    var self = this;
+
+    var cumulativeVotesInitialIn = self.getFreshCumulativeVotes();
+    var cumulativeVotesInitialOut = self.getFreshCumulativeVotes();
+    var cumulativeVotesIn = self.getFreshCumulativeVotes();
+    var cumulativeVotesOut = self.getFreshCumulativeVotes();
+
+    var s = '.vote-line-between-rounds.vote-line-round-' + roundIndex;
+    if (original) {
+      s += '.vote-line-original';
+    }
+
+    self.svg.selectAll(s)
+      .interrupt()
+      .transition()
+      .duration(2000)
+      .attr('d', function(d) {
+        var lineData = [];
+        var beginPoint = [(d.from * self.candidateWidth) +
+            self.x(cumulativeVotesInitialOut[d.from]),
+            roundIndex * self.vPadding + self.rowHeight];
+        var endPoint = [(d.to * self.candidateWidth) +
+            self.x(cumulativeVotesInitialIn[d.to]),
+            (roundIndex + 1) * self.vPadding];
+
+        var preMidPoint = [beginPoint[0], beginPoint[1] +
+            (self.vPadding / 3)];
+        var midPoint = [(beginPoint[0] + endPoint[0]) / 2,
+            (beginPoint[1] + endPoint[1]) / 2];
+        var postMidPoint = [endPoint[0],
+            endPoint[1] - (self.vPadding / 3)];
+
+        lineData.push(beginPoint);
+        lineData.push(preMidPoint);
+        lineData.push(midPoint);
+        lineData.push(postMidPoint);
+        lineData.push(endPoint);
+
+        cumulativeVotesInitialIn[d.to] += d.votes / self.totalVotes;
+        cumulativeVotesInitialOut[d.from] += d.votes / self.totalVotes;
+
+        return self.line(lineData);
+      });
+  },
+
+  undrawRoundBetween: function(roundIndex) {
+    var self = this;
+
+    var cumulativeVotesInitialIn = self.getFreshCumulativeVotes();
+    var cumulativeVotesInitialOut = self.getFreshCumulativeVotes();
+    var cumulativeVotesIn = self.getFreshCumulativeVotes();
+    var cumulativeVotesOut = self.getFreshCumulativeVotes();
+
+    var s = '.vote-line-between-rounds.vote-line-round-' + roundIndex;
+
+    self.svg.selectAll(s)
+      .interrupt()
+      .transition()
+      .duration(2000)
+      .attr('d', function(d) {
+        var lineData = [];
+        var beginPoint = [(d.from * self.candidateWidth) +
+            self.x(cumulativeVotesInitialOut[d.from]),
+            roundIndex * self.vPadding + self.rowHeight];
+        var endPoint = [(d.to * self.candidateWidth) +
+            self.x(cumulativeVotesInitialIn[d.to]),
+            (roundIndex + 1) * self.vPadding];
+
+        var preMidPoint = [beginPoint[0], beginPoint[1] +
+            (self.vPadding / 3)];
+        var midPoint = [(beginPoint[0] + endPoint[0]) / 2,
+            (beginPoint[1] + endPoint[1]) / 2];
+        var postMidPoint = [endPoint[0],
+            endPoint[1] - (self.vPadding / 3)];
+
+        lineData.push(beginPoint);
+        lineData.push(beginPoint);
+        lineData.push(beginPoint);
+        lineData.push(beginPoint);
+        lineData.push(beginPoint);
+
+        cumulativeVotesInitialIn[d.to] += d.votes / self.totalVotes;
+        cumulativeVotesInitialOut[d.from] += d.votes / self.totalVotes;
+
+        return self.line(lineData);
+      });
   },
 
   mouseover: function(d) {
