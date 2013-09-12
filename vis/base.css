@@ -143,7 +143,11 @@ body {
 .candidates20 .candidate img {
   max-width: 34.5px;
   padding: 2px;
-  opacity: 0.2;
+  opacity: 0.4;
+}
+.candidates20 .candidate-eliminated img {
+  opacity: 0.1;
+  transition: opacity .4s linear;
 }
 
 .round-label {
