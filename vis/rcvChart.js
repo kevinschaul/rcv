@@ -175,8 +175,13 @@ var rcvChart = {
               self.x(cumulativeVotesOut[d.from]),
               roundIndex * self.vPadding + self.rowHeight];
 
-          lineData.push(beginPoint);
-          lineData.push(beginPoint);
+          if (roundIndex === 0) {
+            lineData.push(beginPoint);
+            lineData.push(endPoint);
+          } else {
+            lineData.push(beginPoint);
+            lineData.push(beginPoint);
+          }
 
           cumulativeVotesIn[d.to] += d.votes / self.totalVotes;
           cumulativeVotesOut[d.from] += d.votes / self.totalVotes;
