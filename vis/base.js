@@ -155,7 +155,13 @@ var unsetStage = function(stage) {
   stages[stage][1]();
 };
 
+var btnPrevious = d3.select('.btn-previous');
+var btnNext = d3.select('.btn-next');
+
 var previousStage = function() {
+  d3.select('.btn-inactive')
+    .classed('btn-inactive', false)
+
   if (!isTransitioning) {
     if (currentStage - 1 >= 0) {
       unsetStage(currentStage);
@@ -163,19 +169,27 @@ var previousStage = function() {
       setStage(currentStage);
     }
   }
+
+  if (currentStage === 0) {
+    btnPrevious.classed('btn-inactive', true)
+  }
 };
 
 var nextStage = function() {
+  d3.select('.btn-inactive')
+    .classed('btn-inactive', false)
+
   if (!isTransitioning) {
     if (currentStage + 1 < stages.length) {
       currentStage += 1;
       setStage(currentStage);
     }
   }
-};
 
-var btnPrevious = d3.select('.btn-previous');
-var btnNext = d3.select('.btn-next');
+  if (currentStage === stages.length - 1) {
+    btnNext.classed('btn-inactive', true)
+  }
+};
 
 btnPrevious.on('click', function() {
   previousStage();
