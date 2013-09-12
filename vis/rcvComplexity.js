@@ -78,6 +78,16 @@ var rcvComplexity = {
       .attr('x', x(40) + 4)
       .attr('y', y(50000) + 17)
       .text('combinations')
+
+    annotations.append('text')
+      .attr('x', x(35) - 140)
+      .attr('y', y(39000) - 30)
+      .text('There will be 35 candidates')
+
+    annotations.append('text')
+      .attr('x', x(35) - 140)
+      .attr('y', y(39000) - 18)
+      .text('on this year\'s mayoral ballot.')
   }
 };
 
