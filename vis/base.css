@@ -11,10 +11,70 @@ body {
   margin: auto;
 }
 
+@font-face {
+  font-family: Popular;
+  src: url("http://apps.startribune.com/fonts/popular/regular/851caebd-2961-4fd9-a500-2b38452b1ec9-2.eot?") format("embedded-opentype"),
+   url("http://apps.startribune.com/fonts/popular/regular/851caebd-2961-4fd9-a500-2b38452b1ec9-3.woff") format("woff"),
+   url("http://apps.startribune.com/fonts/popular/regular/851caebd-2961-4fd9-a500-2b38452b1ec9-1.ttf") format("truetype"),
+   url("http://apps.startribune.com/fonts/popular/regular/851caebd-2961-4fd9-a500-2b38452b1ec9-4.svg#web") format("svg");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Popular-medium;
+  src: url("http://apps.startribune.com/fonts/popular/medium/96c3bd87-fed5-419d-a1cf-d947b17d6ab7-2.eot?") format("embedded-opentype"),
+   url("http://apps.startribune.com/fonts/popular/medium/96c3bd87-fed5-419d-a1cf-d947b17d6ab7-3.woff") format("woff"),
+   url("http://apps.startribune.com/fonts/popular/medium/96c3bd87-fed5-419d-a1cf-d947b17d6ab7-1.ttf") format("truetype"),
+   url("http://apps.startribune.com/fonts/popular/medium/96c3bd87-fed5-419d-a1cf-d947b17d6ab7-4.svg#web") format("svg");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Popular-bold;
+  src: url("http://apps.startribune.com/fonts/popular/bold/9a23c9ca-82fe-417a-9070-5f5daeaf6214-2.eot?") format("embedded-opentype"),
+    url("http://apps.startribune.com/fonts/popular/bold/9a23c9ca-82fe-417a-9070-5f5daeaf6214-3.woff") format("woff"),
+    url("http://apps.startribune.com/fonts/popular/bold/9a23c9ca-82fe-417a-9070-5f5daeaf6214-1.ttf") format("truetype"),
+    url("http://apps.startribune.com/fonts/popular/bold/9a23c9ca-82fe-417a-9070-5f5daeaf6214-4.svg#web") format("svg");
+  font-style: normal;
+  font-weight: bold;
+}
+
 .graphic {
-  width: 960px;
   margin: 0 auto 50px auto;
   color: #333;
+}
+
+.introbox {
+  background-color: none;
+  margin: 40px 0 0 0;
+}
+
+.introHed {
+  font-family: Popular, sans-serif;
+  font-size: 36px;
+  color: #999;
+  text-align: center;
+  margin: 20px 0 0 0;
+}
+.labelHed {
+  font-family: Popular-bold, sans-serif;
+  font-size: 14px;
+  color: #333;
+  margin: 18px 0 3px 0;
+  text-transform: uppercase;
+}
+.globber {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 130%;
+  color: #333;
+  margin-bottom: 7px;
+}
+.sampleBallot {
+  float: right;
+  vertical-align: top;
 }
 
 .graphic h1 {
