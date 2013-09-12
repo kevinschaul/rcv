@@ -31,6 +31,8 @@ var stages = [
       isTransitioning = true;
       r.drawRoundAnnotations(1);
       r.drawRoundBetween(0, true, function() {
+        d3.select('.candidate-1')
+          .classed('candidate-eliminated', true);
         isTransitioning = false;
       });
       explanation.text('Since no candidate reached the threshold, we continue to Round 2. The candidate with the least votes is eliminated.');
@@ -44,6 +46,8 @@ var stages = [
       isTransitioning = true;
       r.undrawRoundAnnotations(1);
       r.undrawRoundBetween(0, true, function() {
+        d3.select('.candidate-1')
+          .classed('candidate-eliminated', false);
         isTransitioning = false;
       });
       controls
@@ -90,6 +94,8 @@ var stages = [
       explanation.text('Still, no candidate has reached the threshold. The candidate with the least votes is eliminated again, with his or her votes redistributed.');
       r.drawRoundAnnotations(2);
       r.drawRoundBetween(1, true, function() {
+        d3.select('.candidate-3')
+          .classed('candidate-eliminated', true);
         r.drawRoundBetween(1, false, function() {
           isTransitioning = false;
         });
@@ -104,6 +110,8 @@ var stages = [
       isTransitioning = true;
       r.undrawRoundAnnotations(2);
       r.undrawRoundBetween(1, false, function() {
+        d3.select('.candidate-3')
+          .classed('candidate-eliminated', false);
         isTransitioning = false;
       });
       controls
@@ -117,6 +125,8 @@ var stages = [
       isTransitioning = true;
       explanation.text('With this redistribution, Candidate C reached the threshold and is the winner.');
       r.drawRoundChart(2, function() {
+        d3.select('.candidate-0')
+          .classed('candidate-eliminated', true);
         r.svg.selectAll('.vote-line-chart-round-2.vote-line-from-candidate-2')
           .transition()
           .ease('linear')
@@ -135,6 +145,8 @@ var stages = [
     function() {
       isTransitioning = true;
       r.undrawRoundChart(2, function() {
+        d3.select('.candidate-0')
+          .classed('candidate-eliminated', false);
         isTransitioning = false;
       });
       r.svg.selectAll('.vote-line-chart-round-2.vote-line-from-candidate-2')
