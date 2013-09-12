@@ -1,6 +1,6 @@
 var rcvComplexity = {
   init: function() {
-    var margin = { top: 10, right: 70, bottom: 20, left: 10 };
+    var margin = { top: 0, right: 70, bottom: 20, left: 10 };
     var width = 380 - margin.left - margin.right;
     var height = 350 - margin.top - margin.bottom;
 
