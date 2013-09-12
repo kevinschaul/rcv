@@ -19,7 +19,6 @@ var rcvComplexity = {
       var n = i * (i - 1) * (i - 2);
       data.push(n);
     }
-    console.log(data);
 
     var x = d3.scale.linear()
       .domain([0, numberOfCandidates])

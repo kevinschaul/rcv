@@ -4,7 +4,7 @@ var controls = d3.select('.controls');
 
 var isTransitioning = false;
 
-d3.selectAll('.round-labels .round-label, .guide-wrapper')
+r.svg.selectAll('.round-labels .round-label, .guide-wrapper')
   .style('opacity', 0);
 
 var stages = [
@@ -55,7 +55,7 @@ var stages = [
   ], [
     function() {
       isTransitioning = true;
-      d3.select('.vote-line-round-0.vote-line-from-1-to-3')
+      r.svg.select('.vote-line-round-0.vote-line-from-1-to-3')
         .classed('vote-line-active', false);
       r.drawRoundBetween(0, false, function() {
         r.drawRoundChart(1, function() {
@@ -74,18 +74,18 @@ var stages = [
     }
   ], [
     function() {
-      d3.select('.vote-line-round-0.vote-line-from-1-to-3')
+      r.svg.select('.vote-line-round-0.vote-line-from-1-to-3')
         .classed('vote-line-active', true);
       explanation.text('For example, if Joe voted first choice for Candidate B and second choice for Candidate D, his vote would have moved to Candidate D.');
     },
     function() {
-      d3.select('.vote-line-round-0.vote-line-from-1-to-3')
+      r.svg.select('.vote-line-round-0.vote-line-from-1-to-3')
         .classed('vote-line-active', false);
     }
   ], [
     function() {
       isTransitioning = true;
-      d3.select('.vote-line-round-0.vote-line-from-1-to-3')
+      r.svg.select('.vote-line-round-0.vote-line-from-1-to-3')
         .classed('vote-line-active', false);
       explanation.text('Still, no candidate has reached the threshold. The candidate with the least votes is eliminated again, with his or her votes redistributed.');
       r.drawRoundAnnotations(2);
@@ -117,12 +117,12 @@ var stages = [
       isTransitioning = true;
       explanation.text('With this redistribution, Candidate C reached the threshold and is the winner.');
       r.drawRoundChart(2, function() {
-        d3.selectAll('.vote-line-chart-round-2.vote-line-from-candidate-2')
+        r.svg.selectAll('.vote-line-chart-round-2.vote-line-from-candidate-2')
           .transition()
           .ease('linear')
           .duration(500)
           .style('stroke-opacity', 0.7);
-        d3.select('.guide-wrapper-round-2.guide-wrapper-candidate-2 .guide')
+        r.svg.select('.guide-wrapper-round-2.guide-wrapper-candidate-2 .guide')
           .transition()
           .ease('linear')
           .duration(500)
@@ -137,9 +137,9 @@ var stages = [
       r.undrawRoundChart(2, function() {
         isTransitioning = false;
       });
-      d3.selectAll('.vote-line-chart-round-2.vote-line-from-candidate-2')
+      r.svg.selectAll('.vote-line-chart-round-2.vote-line-from-candidate-2')
         .style('stroke-opacity', 0.5);
-      d3.select('.guide-wrapper-round-2.guide-wrapper-candidate-2 .guide')
+      r.svg.select('.guide-wrapper-round-2.guide-wrapper-candidate-2 .guide')
         .style('stroke', '#999');
     }
   ]
@@ -189,91 +189,14 @@ setStage(0);
 
 rcvComplexity.init();
 
+var r1 = rcvChart20.init('.target-2', data20);
+console.log(data20);
+r1.drawRoundChart(0);
+r1.drawRoundBetween(0);
+r1.drawRoundChart(1);
+r1.drawRoundBetween(1);
+
 /*
-
-(function() {
-var margin = { top: 10, right: 70, bottom: 20, left: 10 };
-var width = 380 - margin.left - margin.right;
-var height = 350 - margin.top - margin.bottom;
-
-var svg = d3.select('.target-1').append('svg')
-  .attr('width', 380)
-  .attr('height', 350)
-    .append('g')
-  .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-
-var data = [];
-var numberOfCandidates = 40;
-for (var i = 0; i <= numberOfCandidates; i++) {
-  // Simplified version of
-  // n! / (n - m)!
-  // where m = 3
-  var n = i * (i - 1) * (i - 2);
-  data.push(n);
-}
-console.log(data);
-
-var x = d3.scale.linear()
-  .domain([0, numberOfCandidates])
-  .range([0, width]);
-
-var y = d3.scale.linear()
-  .domain([0, d3.max(data)])
-  .range([height, 0]);
-
-var xAxis = d3.svg.axis()
-  .scale(x)
-  .tickValues([0, 10, 20, 30, 40])
-  .orient('bottom');
-
-var yAxis = d3.svg.axis()
-  .scale(y)
-  .ticks(5)
-  .tickSize(width)
-  .orient('right');
-
-var axis = svg.append('g')
-  .attr('class', 'axis')
-
-axis.append('g')
-  .attr('class', 'x-axis')
-  .attr('transform', 'translate(0,' + height + ')')
-  .call(xAxis);
-
-axis.append('g')
-  .attr('class', 'y-axis')
-  //.attr('transform', 'translate(' + width + ',0)')
-  .call(yAxis);
-
-var line = d3.svg.line()
-  .x(function(d, i) { return x(i); })
-  .y(function(d, i) { return y(d); });
-
-svg.append('path')
-  .attr('class', 'line')
-  .attr('d', line(data));
-
-svg.append('circle')
-  .attr('class', 'annotation-circle')
-  .attr('cx', x(35))
-  .attr('cy', y(data[35]))
-  .attr('r', 10)
-
-var annotations = svg.append('g')
-  .attr('class', 'annotation annotation-graph')
-
-annotations.append('text')
-  .attr('x', x(0) + 7)
-  .attr('y', y(0) + 17)
-  .text('candidates')
-
-annotations.append('text')
-  .attr('x', x(40) + 4)
-  .attr('y', y(50000) + 17)
-  .text('combinations')
-
-})();
-
 
 (function() {
 

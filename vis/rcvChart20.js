@@ -1,17 +1,17 @@
-var rcvChart = {
+var rcvChart20 = {
   /* Options */
-  margin: { top: 10, right: 10, bottom: 10, left: 30 },
+  margin: { top: 10, right: 10, bottom: 10, left: 60 },
   baseWidth: 960,
-  baseHeight: 450,
+  baseHeight: 1000,
 
-  hPadding: 100,
-  vPadding: 180,
-  rowHeight: 30,
+  hPadding: 10,
+  vPadding: 130,
+  rowHeight: 20,
 
   // TODO These can be computed
-  totalVotes: 77,
-  numberOfRounds: 3,
-  numberOfCandidates: 4,
+  totalVotes: 100,
+  numberOfRounds: 2,
+  numberOfCandidates: 20,
 
   /* Computed */
   candidateWidth: null,
