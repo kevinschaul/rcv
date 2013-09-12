@@ -75,20 +75,20 @@ body {
   font-family: Georgia, serif;
   font-size: 14px;
   line-height: 20px;
-  margin-left: 65px;
+  margin-left: 158px;
 }
 
 .btn {
   float: left;
-  width: 32px;
-  height: 20px;
+  width: 50px;
+  height: 25px;
   padding: 6px 10px;
   margin: 4px 2px;
   background-color: #666;
   border-radius: 4px;
   color: #fff;
   text-align: center;
-  line-height: 20px;
+  line-height: 25px;
   cursor: pointer;
   font-family: arial, sans-serif;
   font-size: 12px;
