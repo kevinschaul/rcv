@@ -2,7 +2,7 @@ var rcvChart20 = {
   /* Options */
   margin: { top: 10, right: 10, bottom: 10, left: 60 },
   baseWidth: 960,
-  baseHeight: 1000,
+  baseHeight: 600,
 
   hPadding: 10,
   vPadding: 100,
