@@ -10,7 +10,7 @@ var rcvChart20 = {
 
   // TODO These can be computed
   totalVotes: 100,
-  numberOfRounds: 3,
+  numberOfRounds: 6,
   numberOfCandidates: 20,
 
   /* Computed */

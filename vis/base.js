@@ -197,6 +197,12 @@ r1.drawRoundChart(1);
 r1.drawRoundBetween(1);
 r1.drawRoundChart(2);
 r1.drawRoundBetween(2);
+r1.drawRoundChart(3);
+r1.drawRoundBetween(3);
+r1.drawRoundChart(4);
+r1.drawRoundBetween(4);
+r1.drawRoundChart(5);
+r1.drawRoundBetween(5);
 
 /*
 
