@@ -126,6 +126,21 @@ body {
   opacity: 0.2;
 }
 
+.candidates20 {
+  margin-left: 58px;
+}
+.candidates20 .candidate {
+  float: left;
+  margin: 0 5px;
+  width: 34.5px;
+  text-align: center;
+}
+.candidates20 .candidate img {
+  max-width: 34.5px;
+  padding: 2px;
+  opacity: 0.2;
+}
+
 .round-label {
   font-family: Arial, sans-serif;
   font-size: 13px;
@@ -216,9 +231,5 @@ body {
   fill-opacity: 0.2;
   stroke: #333;
   stroke-width: 1px;
-}
-
-.target-2 {
-  margin-top: 50px;
 }
 

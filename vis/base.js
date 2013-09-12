@@ -190,19 +190,29 @@ setStage(0);
 rcvComplexity.init();
 
 var r1 = rcvChart20.init('.target-2', data20);
-console.log(data20);
-r1.drawRoundChart(0);
-r1.drawRoundBetween(0);
-r1.drawRoundChart(1);
-r1.drawRoundBetween(1);
-r1.drawRoundChart(2);
-r1.drawRoundBetween(2);
-r1.drawRoundChart(3);
-r1.drawRoundBetween(3);
-r1.drawRoundChart(4);
-r1.drawRoundBetween(4);
-r1.drawRoundChart(5);
-r1.drawRoundBetween(5);
+r1.drawRoundChart(0, function() {
+  r1.drawRoundBetween(0, false, function() {
+    r1.drawRoundChart(1, function() {
+      r1.drawRoundBetween(1, false, function() {
+        r1.drawRoundChart(2, function() {
+          r1.drawRoundBetween(2, false, function() {
+            r1.drawRoundChart(3, function() {
+              r1.drawRoundBetween(3, false, function() {
+                r1.drawRoundChart(4, function() {
+                  r1.drawRoundBetween(4, false, function() {
+                    r1.drawRoundChart(5, function() {
+                      r1.drawRoundBetween(5);
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+});
 
 /*
 

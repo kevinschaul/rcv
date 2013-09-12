@@ -5,8 +5,8 @@ var rcvChart20 = {
   baseHeight: 1000,
 
   hPadding: 10,
-  vPadding: 130,
-  rowHeight: 20,
+  vPadding: 100,
+  rowHeight: 15,
 
   // TODO These can be computed
   totalVotes: 100,
