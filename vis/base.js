@@ -195,6 +195,8 @@ r1.drawRoundChart(0);
 r1.drawRoundBetween(0);
 r1.drawRoundChart(1);
 r1.drawRoundBetween(1);
+r1.drawRoundChart(2);
+r1.drawRoundBetween(2);
 
 /*
 

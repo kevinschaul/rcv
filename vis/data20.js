@@ -329,7 +329,6 @@ window.data20 = [
         from: 19
       }
     ], [
-    // TODO
       {
         votes: 3,
         originalFrom: true,
@@ -347,6 +346,12 @@ window.data20 = [
         originalFrom: false,
         originalTo: false,
         from: 1,
+        to: 1
+      }, {
+        votes: 1,
+        originalFrom: false,
+        originalTo: false,
+        from: 13,
         to: 1
       }, {
         votes: 3,
@@ -367,11 +372,11 @@ window.data20 = [
         from: 4,
         to: 4
       }, {
-        votes: 2,
-        originalFrom: true,
-        originalTo: true,
-        from: 7,
-        to: 7
+        votes: 1,
+        originalFrom: false,
+        originalTo: false,
+        from: 13,
+        to: 4
       }, {
         votes: 17,
         originalFrom: true,
@@ -385,23 +390,11 @@ window.data20 = [
         from: 8,
         to: 8
       }, {
-        votes: 2,
-        originalFrom: true,
-        originalTo: true,
-        from: 10,
-        to: 10
-      }, {
         votes: 7,
         originalFrom: true,
         originalTo: true,
         from: 11,
         to: 11
-      }, {
-        votes: 2,
-        originalFrom: true,
-        originalTo: true,
-        from: 13,
-        to: 13
       }, {
         votes: 3,
         originalFrom: true,
@@ -422,60 +415,76 @@ window.data20 = [
         to: 16
       }, {
         votes: 2,
-        originalFrom: true,
-        originalTo: true,
+        originalFrom: false,
+        originalTo: false,
+        from: 7,
+        to: 16
+      }, {
+        votes: 2,
+        originalFrom: false,
+        originalTo: false,
+        from: 10,
+        to: 16
+      }, {
+        votes: 2,
+        originalFrom: false,
+        originalTo: false,
         from: 19,
-        to: 19
-
-      }, {
-        votes: 1,
-        originalFrom: true,
-        originalTo: false,
-        from: 3,
-        to: 2
-      }, {
-        votes: 1,
-        originalFrom: true,
-        originalTo: false,
-        from: 5,
-        to: 16
-      }, {
-        votes: 1,
-        originalFrom: true,
-        originalTo: false,
-        from: 6,
-        to: 16
-      }, {
-        votes: 1,
-        originalFrom: true,
-        originalTo: false,
-        from: 9,
-        to: 8
-      }, {
-        votes: 1,
-        originalFrom: true,
-        originalTo: false,
-        from: 12,
-        to: 16
-      }, {
-        votes: 1,
-        originalFrom: true,
-        originalTo: false,
-        from: 14,
-        to: 16
-      }, {
-        votes: 1,
-        originalFrom: true,
-        originalTo: false,
-        from: 17,
-        to: 16
-      }, {
-        votes: 1,
-        originalFrom: true,
-        originalTo: false,
-        from: 18,
         to: 16
       }
+    ]
+  ], [
+    [
+      {
+        votes: 3,
+        original: true,
+        from: 0
+      }, {
+        votes: 22,
+        original: true,
+        from: 1
+      }, {
+        votes: 4,
+        from: 1
+      }, {
+        votes: 3,
+        original: true,
+        from: 2
+      }, {
+        votes: 1,
+        from: 2
+      }, {
+        votes: 4,
+        original: true,
+        from: 4
+      }, {
+        votes: 1,
+        from: 4
+      }, {
+        votes: 17,
+        original: true,
+        from: 8
+      }, {
+        votes: 1,
+        from: 8
+      }, {
+        votes: 7,
+        original: true,
+        from: 11
+      }, {
+        votes: 3,
+        original: true,
+        from: 15
+      }, {
+        votes: 25,
+        original: true,
+        from: 16
+      }, {
+        votes: 9,
+        from: 16
+      }
+    ], [
+
     ]
   ]
 ];
