@@ -174,6 +174,12 @@ body {
   stroke-dasharray: 2, 2;
   shape-rendering: crispEdges;
 }
+.threshold-label {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  fill: #666;
+  stroke: none;
+}
 .vote-line {
   fill: none;
   stroke: #334561;

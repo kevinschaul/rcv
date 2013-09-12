@@ -123,6 +123,17 @@ var rcvChart = {
                 self.x(.5))
             .attr('y1', roundIndex * self.vPadding)
             .attr('y2', (roundIndex * self.vPadding) + self.rowHeight);
+
+          if (roundIndex === 0 && candidateIndex === 0) {
+            guideWrapper.append('text')
+              .attr('class', 'threshold-label')
+              .attr('x', ((candidateIndex *
+                  (self.width / self.numberOfCandidates)) + (self.hPadding / 2) +
+                  self.x(.5)) + 4)
+              .attr('y', (roundIndex * self.vPadding) + (self.rowHeight / 2)
+                   + 4)
+              .text('50%')
+          }
         }
         self.candidatesInContention[candidateIndex] = _.find(
             self.data[roundIndex][1], function(d) {
