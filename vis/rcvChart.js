@@ -173,6 +173,7 @@ var rcvChart = {
           return self.line(lineData);
         })
         .on('mouseover', self.mouseover)
+        .on('mouseout', self.mouseout)
 
       // If not the last round, draw each vote line
       if (roundIndex + 1 < self.numberOfRounds) {
@@ -235,6 +236,7 @@ var rcvChart = {
             return self.line(lineData);
           })
           .on('mouseover', self.mouseover)
+          .on('mouseout', self.mouseout)
       }
 
     });
@@ -442,6 +444,13 @@ var rcvChart = {
 
   mouseover: function(d) {
     console.log(d);
+    d3.select(this)
+      .classed('vote-line-active', true);
+  },
+
+  mouseout: function(d) {
+    d3.select(this)
+      .classed('vote-line-active', false);
   },
 
   getFreshCumulativeVotes: function() {

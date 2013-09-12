@@ -178,9 +178,11 @@ body {
   fill: none;
   stroke: #334561;
   stroke-opacity: 0.5;
+  transition: stroke-opacity .1s linear;
 }
 .vote-line-active {
   stroke-opacity: 0.9;
+  transition: stroke-opacity .1s linear;
 }
 .vote-line-original {
   stroke: #58794F;
