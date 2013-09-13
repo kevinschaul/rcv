@@ -157,7 +157,6 @@
           <div class="clear"></div>
         </div>
         <div class="target-2"></div>
-        <img class="fallback" src="fallback-2.png" alt="fallback" />
       </div>
 
       <div class="controls">
@@ -191,6 +190,7 @@
     </div>
     <div class="col2">
       <div class="target-1"></div>
+      <img class="fallback" src="fallback-2.png" alt="fallback" />
     </div>
     <div class="clear"></div>
   </div>
