@@ -193,7 +193,7 @@ body {
 .candidate img {
   max-width: 80px;
   padding: 2px;
-  opacity: 0.4;
+  opacity: 0.6;
   transition: opacity .4s linear;
 }
 .candidate-eliminated img {
