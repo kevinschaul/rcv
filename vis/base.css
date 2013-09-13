@@ -6,11 +6,6 @@
   -moz-user-select: none;
 }
 
-body {
-  width: 960px;
-  margin: auto;
-}
-
 @font-face {
   font-family: Popular;
   src: url("http://apps.startribune.com/fonts/popular/regular/851caebd-2961-4fd9-a500-2b38452b1ec9-2.eot?") format("embedded-opentype"),
