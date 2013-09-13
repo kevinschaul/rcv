@@ -49,7 +49,7 @@
     <div class="globber">This process continues until a candidate reaches more than 50 percent of the votes, or until only one candidate remains.</div>
     <div class="globber"><b>A walkthrough of the process is below.</b></div>
 
-    <div class="fallback fallback-info">This graphic is not available in Interactive Explorer.</div>
+    <div class="fallback fallback-info">Interactive portions of this graphic are not available in this version of Internet Explorer.</div>
 
     <div class="clear"></div>
   </div>
