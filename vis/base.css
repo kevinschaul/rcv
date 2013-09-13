@@ -320,3 +320,40 @@ body {
   stroke-width: 1px;
 }
 
+@font-face {
+  font-family: 'icomoon';
+  src:url('http://ww2.startribune.com/fonts/icomoon.eot');
+  src:url('http://ww2.startribune.com/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+    url('http://ww2.startribune.com/fonts/icomoon.woff') format('woff'),
+    url('http://ww2.startribune.com/onts/icomoon.ttf') format('truetype'),
+    url('http://ww2.startribune.com/fonts/icomoon.svg#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.navRule{font-size:1.6em;height:1px;background: -moz-linear-gradient(left,  rgba(255,255,255,0) 0%, rgba(0,0,0,0.5) 49%, rgba(0,0,0,0) 99%, rgba(0,0,0,0) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(49%,rgba(0,0,0,0.5)), color-stop(99%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.5) 49%,rgba(0,0,0,0) 99%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.5) 49%,rgba(0,0,0,0) 99%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.5) 49%,rgba(0,0,0,0) 99%,rgba(0,0,0,0) 100%); /* IE10+ */
+background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.5) 49%,rgba(0,0,0,0) 99%,rgba(0,0,0,0) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00000000',GradientType=1 ); /* IE6-9 */
+font-family:icomoon;text-align:center;margin-bottom:48px;margin-top:36px;clear:both;}
+.icon-arrow-down, .icon-arrow-down-2 {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  opacity:0.7;
+  cursor:pointer;
+}
+.icon-arrow-down:before {
+  content: "\e000";
+}
+.icon-arrow-down-2:before {
+  content: "\e001";
+}
+
