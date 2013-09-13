@@ -33,6 +33,9 @@ var stages = [
   ], [
     function() {
       isTransitioning = true;
+      $('html, body').animate({
+        scrollTop: $('#view1').offset().top - 15
+      }, 1000);
       r.drawRoundAnnotations(1);
       r.drawRoundBetween(0, true, function() {
         d3.select('.candidate-1')
