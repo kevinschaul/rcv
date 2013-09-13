@@ -1,6 +1,7 @@
 .clear {
   clear: both;
 }
+.oneColContainer{}
 .no-select {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -39,11 +40,11 @@
 .graphic {
   margin: 0 auto 50px auto;
   color: #333;
+  display:none;
 }
 
 .introbox {
-  background-color: none;
-  margin: 40px 0 0 0;
+  margin-top:6px;
 }
 
 .introHed {
@@ -52,24 +53,27 @@
   color: #999;
   text-align: center;
   margin: 20px 0 0 0;
+  line-height:130%;
+  display:none;
 }
 .labelHed {
   font-family: Popular-bold, sans-serif;
-  font-size: 14px;
+  font-size: 18px;
   color: #333;
-  margin: 18px 0 3px 0;
-  text-transform: uppercase;
+  line-height:130%;
+  margin-bottom:0px;
 }
 .globber {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: Georgia, serif;
   font-size: 14px;
   line-height: 130%;
   color: #333;
-  margin-bottom: 7px;
+  margin:6px 0 6px 0;
 }
 .sampleBallot {
   float: right;
   vertical-align: top;
+  margin-top:-10px !important;
 }
 
 .graphic h1 {
@@ -115,6 +119,7 @@
 .chart-wrapper {
   position: relative;
   height: 630px;
+  font-family:arial,helvetica,sans-serif !important;
 }
 
 .chart {
@@ -130,17 +135,18 @@
 
 .controls {
   position: absolute;
-  top: 170px;
+  top: 190px;
   left: 0px;
 }
 
 .explanation {
-  width: 420px;
+  width: 530px;
   height: 50px;
   font-family: Georgia, serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 20px;
   margin-left: 158px;
+  padding-top:3px;
 }
 
 .btn {
@@ -270,13 +276,19 @@
 
 .col1 {
   margin-left: 100px;
-  width: 380px;
+  width: 360px;
   float: left;
+  margin-top:18px;
+  padding-right:18px;
+   font-family: Georgia, serif;
+  font-size: 14px;
+  line-height: 18px;
 }
 .col2 {
   margin-right: 100px;
   width: 380px;
   float: left;
+  margin-top:18px;
 }
 
 .axis {
@@ -332,7 +344,7 @@ background: -o-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.5) 49%
 background: -ms-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.5) 49%,rgba(0,0,0,0) 99%,rgba(0,0,0,0) 100%); /* IE10+ */
 background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(0,0,0,0.5) 49%,rgba(0,0,0,0) 99%,rgba(0,0,0,0) 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00000000',GradientType=1 ); /* IE6-9 */
-font-family:icomoon;text-align:center;margin-bottom:48px;margin-top:36px;clear:both;}
+font-family:icomoon;text-align:center;margin:24px 0 24px 0;clear:both;}
 .icon-arrow-down, .icon-arrow-down-2 {
   font-family: 'icomoon';
   speak: none;
@@ -351,4 +363,7 @@ font-family:icomoon;text-align:center;margin-bottom:48px;margin-top:36px;clear:b
 .icon-arrow-down-2:before {
   content: "\e001";
 }
+.candidate-name{font-family:arial,helvetica,sans-serif;font-weight:bold;margin:9px 0 9px 0;}
+#adcheckB{border:none;}
+.view2 .globber{margin-bottom:24px;}
 

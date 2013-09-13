@@ -1,6 +1,6 @@
 <?php readfile('http://www.startribune.com/templates/vh?vid=223669441&sosp=/politics'); ?>
 
-<link rel="stylesheet" href="http://webdev0.startribune.com/huttj/visStyle.css" />
+<link rel="stylesheet" href="base.css" />
 <style>
 .fallback {
   display: none;
