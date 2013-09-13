@@ -42,7 +42,7 @@ var stages = [
           .classed('candidate-eliminated', true);
         isTransitioning = false;
       });
-      explanation.text('Since no candidate won a majority, we continue to Round 2. The candidate with the least votes is eliminated.');
+      explanation.text('Since no candidate won a majority, we continue to Round 2. The candidate with the fewest votes is eliminated.');
       controls
         .transition()
         .ease('linear')
