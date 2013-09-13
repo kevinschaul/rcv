@@ -288,7 +288,7 @@ var rcvChart20 = {
       .interrupt()
       .transition()
       .ease('linear')
-      .duration(500)
+      .duration(10)
       .attr('d', function(d) {
         var lineData = [];
         var beginPoint = [(d.from * self.candidateWidth) +
@@ -386,7 +386,7 @@ var rcvChart20 = {
       .interrupt()
       .transition()
       .ease('linear')
-      .duration(1500)
+      .duration(100)
       .attr('d', function(d) {
         var lineData = [];
         var beginPoint = [(d.from * self.candidateWidth) +
@@ -427,7 +427,7 @@ var rcvChart20 = {
         ', .guide-wrapper-round-' + round)
       .transition()
       .ease('linear')
-      .duration(500)
+      .duration(100)
       .style('opacity', 1);
   },
 
@@ -436,7 +436,7 @@ var rcvChart20 = {
         ', .guide-wrapper-round-' + round)
       .transition()
       .ease('linear')
-      .duration(500)
+      .duration(100)
       .style('opacity', 0);
   },
 

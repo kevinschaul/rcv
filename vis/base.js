@@ -122,7 +122,7 @@ var stages = [
         .transition()
         .ease('linear')
         .duration(1000)
-        .style('top', 330);
+        .style('top', 350);
     }
   ], [
     function() {
@@ -191,11 +191,41 @@ var stages = [
       explanation.text('Ranked choice voting is relatively simple with only four candidates. Let\'s see what happens with 20.')
     },
     function() {
-      // TODO
+      isTransitioning = true;
+      d3.select('.chart20')
+        .transition()
+        .duration(1000)
+          .style('opacity', 0)
+          .each('end', function() {
+            d3.select('.chart')
+              .style('display', 'none')
+
+            d3.select('.chart')
+              .style('display', 'block')
+              .transition()
+              .duration(1000)
+                .style('opacity', 1)
+                .each('end', function() {
+                  isTransitioning = false;
+                })
+          })
+
+      controls
+        .transition()
+        .ease('linear')
+        .duration(1000)
+        .style('top', 530);
     }
   ], [
     function() {
+     explanation.text('')
      isTransitioning = true;
+     controls
+        .transition()
+        .ease('linear')
+        .duration(1000)
+        .style('top', 570);
+
      r1.drawRoundChart(0, function() {
         r1.drawRoundAnnotations(1)
         d3.selectAll('.candidate-20-4, .candidate-20-6, .candidate-20-7, .candidate-20-10, .candidate-20-13, .candidate-20-15, .candidate-20-18, .candidate-20-19')
@@ -225,9 +255,8 @@ var stages = [
                           r1.drawRoundChart(5, function() {
                             d3.selectAll('.candidate-20-2')
                               .classed('candidate-eliminated', true);
-                            r1.drawRoundBetween(5, function() {
-                              isTransitioning = false;
-                            });
+                            isTransitioning = false;
+                            explanation.text('There will be 35 candidates on this year\s Minneapolis mayoral ballot, meaning the results will likely be even more complex than this.')
                           });
                         });
                       });
@@ -239,19 +268,39 @@ var stages = [
           });
         });
       });
-      controls
-        .transition()
-        .ease('linear')
-        .duration(1000)
-        .style('top', 570);
     },
     function() {
-      r1 = rcvChart20.init();
-      controls
-        .transition()
-        .ease('linear')
-        .duration(1000)
-        .style('top', 80);
+      isTransitioning = true;
+      d3.selectAll('.candidates20 .candidate-eliminated')
+        .classed('candidate-eliminated', false);
+      r1.undrawRoundChart(5, function() {
+         r1.undrawRoundAnnotations(5)
+         r1.undrawRoundBetween(4, false, function() {
+           r1.undrawRoundAnnotations(4)
+           r1.undrawRoundChart(4, function() {
+             r1.undrawRoundBetween(3, false, function() {
+               r1.undrawRoundAnnotations(3)
+               r1.undrawRoundChart(3, function() {
+                 r1.undrawRoundBetween(2, false, function() {
+                   r1.undrawRoundAnnotations(2)
+                   r1.undrawRoundChart(2, function() {
+                     r1.undrawRoundBetween(1, false, function() {
+                       r1.undrawRoundAnnotations(1)
+                       r1.undrawRoundChart(1, function() {
+                         r1.undrawRoundBetween(0, false, function() {
+                           r1.undrawRoundChart(0, function() {
+                             isTransitioning = false;
+                           })
+                         });
+                       });
+                     });
+                   });
+                 });
+               });
+             });
+           });
+         });
+       });
     }
   ]
 ];
@@ -284,6 +333,9 @@ var previousStage = function() {
   if (currentStage === 0) {
     btnPrevious.classed('btn-inactive', true)
   }
+  if (currentStage === stages.length - 1) {
+    btnNext.classed('btn-inactive', true)
+  }
 };
 
 var nextStage = function() {
@@ -297,6 +349,9 @@ var nextStage = function() {
     }
   }
 
+  if (currentStage === 0) {
+    btnPrevious.classed('btn-inactive', true)
+  }
   if (currentStage === stages.length - 1) {
     btnNext.classed('btn-inactive', true)
   }
@@ -309,6 +364,19 @@ btnPrevious.on('click', function() {
 btnNext.on('click', function() {
   nextStage();
 });
+
+document.onkeyup = function(e) {
+  if (e && e.keyCode) {
+    switch (e.keyCode) {
+      case 37:
+        previousStage();
+        break;
+      case 39:
+        nextStage();
+        break;
+    }
+  }
+}
 
 setStage(0);
 
