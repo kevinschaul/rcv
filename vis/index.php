@@ -12,7 +12,7 @@
   font-size: 16px;
   text-align: center;
   background-color: #AAC2AF;
-  margin: 40px auto;
+  margin: 60px auto;
 }
 </style>
 <!--[if lte IE 8]>
