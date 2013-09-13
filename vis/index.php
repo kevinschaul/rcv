@@ -45,9 +45,9 @@
     <div class="globber">If any candidate receives a majority of first-choice votes, he or she is declared the winner. </div>
 
     <div class="labelHed">. . . otherwise elimination rounds begin</div>
-    <div class="globber">The candidate with the fewest votes is eliminated, with his or her votes redistributed based on voters' second and third choices.</div>
+    <div class="globber">The candidate with the fewest votes is eliminated, with his or her votes redistributed based on voters&rsquo; second and third choices.</div>
     <div class="globber">This process continues until a candidate reaches more than 50 percent of the votes, or until only one candidate remains.</div>
-    <div class="globber">A walkthrough of the process is below.</div>
+    <div class="globber"><b>A walkthrough of the process is below.</b></div>
 
     <div class="fallback fallback-info">This graphic is not available in Interactive Explorer.</div>
 
@@ -185,7 +185,7 @@
         In the 2013 Minneapolis mayoral election, there will be 35 candidates on the ballot. Without considering a single write-in, this means there are 39,270 possible rankings.
       </p>
       <p>
-        If no candidate wins an outright majority in this year's mayoral election, we may not know the result for days.
+        If no candidate wins an outright majority in this year&rsquo;s mayoral election, we may not know the result for days.
       </p>
     </div>
     <div class="col2">

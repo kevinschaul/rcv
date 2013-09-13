@@ -224,6 +224,7 @@
 .round-label {
   font-family: Arial, sans-serif;
   font-size: 13px;
+  font-weight: bold;
   fill: #333;
   stroke: none;
 }
@@ -285,7 +286,7 @@
   line-height: 18px;
 }
 .col1 p {
-  margin: 10px 0;
+  margin: 12px 0;
 }
 .col2 {
   margin-right: 100px;

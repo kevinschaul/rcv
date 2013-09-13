@@ -21,7 +21,7 @@ var stages = [
       r.drawRoundChart(0, function() {
         isTransitioning = false;
       });
-      explanation.text('If any candidate wins a majority of first choice votes, he or she is the winner. Candidate A came close, but did not reach the threshold.');
+      explanation.html('If any candidate wins a majority of first choice votes, he or she is the winner. Candidate A came close, but did not reach the threshold.');
     },
     function() {
       isTransitioning = true;
@@ -42,7 +42,7 @@ var stages = [
           .classed('candidate-eliminated', true);
         isTransitioning = false;
       });
-      explanation.text('Since no candidate won a majority, we continue to Round 2. The candidate with the fewest votes is eliminated.');
+      explanation.html('Since no candidate won a majority, we continue to Round 2. The candidate with the fewest votes is eliminated.');
       controls
         .transition()
         .ease('linear')
@@ -73,7 +73,7 @@ var stages = [
           isTransitioning = false;
         });
       });
-      explanation.text('Votes for eliminated candidates are redistributed based on voters\' second or third choice votes.');
+      explanation.html('Votes for eliminated candidates are redistributed based on voters&rsquo; second or third choice votes.');
     },
     function() {
       isTransitioning = true;
@@ -87,7 +87,7 @@ var stages = [
     function() {
       r.svg.select('.vote-line-round-0.vote-line-from-1-to-3')
         .classed('vote-line-active', true);
-      explanation.text('For example, if a voter selected Candidate B as her first choice and Candidate D as her second, her vote would have moved to Candidate D.');
+      explanation.html('For example, if a voter selected Candidate B as her first choice and Candidate D as her second, her vote would have moved to Candidate D.');
     },
     function() {
       r.svg.select('.vote-line-round-0.vote-line-from-1-to-3')
@@ -98,7 +98,7 @@ var stages = [
       isTransitioning = true;
       r.svg.select('.vote-line-round-0.vote-line-from-1-to-3')
         .classed('vote-line-active', false);
-      explanation.text('Still, no candidate has reached the threshold. The candidate with the least votes is eliminated again, with his or her votes redistributed.');
+      explanation.html('Still, no candidate has reached the threshold. The candidate with the least votes is eliminated again, with his or her votes redistributed.');
       r.drawRoundAnnotations(2);
       r.drawRoundBetween(1, true, function() {
         d3.select('.candidate-3')
@@ -130,7 +130,7 @@ var stages = [
   ], [
     function() {
       isTransitioning = true;
-      explanation.text('With this redistribution, Candidate C reached the threshold and is the winner.');
+      explanation.html('With this redistribution, Candidate C reached the threshold and is the winner.');
       r.drawRoundChart(2, function() {
         d3.select('.candidate-0')
           .classed('candidate-eliminated', true);
@@ -195,7 +195,7 @@ var stages = [
         .ease('linear')
         .duration(1000)
         .style('top', '110px');
-      explanation.text('Ranked choice voting is relatively simple with only four candidates. Let\'s see what happens with 20.')
+      explanation.html('Ranked choice voting is relatively simple with only four candidates. Let&rsquo;s see what happens with 20.')
     },
     function() {
       isTransitioning = true;
@@ -225,7 +225,7 @@ var stages = [
     }
   ], [
     function() {
-     explanation.text('')
+     explanation.html('')
      isTransitioning = true;
      controls
         .transition()
@@ -263,7 +263,7 @@ var stages = [
                             d3.selectAll('.candidate-20-2')
                               .classed('candidate-eliminated', true);
                             isTransitioning = false;
-                            explanation.text('There will be 35 candidates on this year\'s Minneapolis mayoral ballot, meaning the results will likely be even more complex.')
+                            explanation.html('There will be 35 candidates on this year&rsquo;s Minneapolis mayoral ballot, meaning the results will likely be even more complex.')
                           });
                         });
                       });
