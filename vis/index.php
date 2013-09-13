@@ -173,10 +173,10 @@
 
   <div id="view2">
     <div class="labelHed">Tallying votes is no easy task</div>
-    <div class="globber">
-      If no candidate wins a majority of votes in the first round, nearly all votes must be tallied before the redistribution calculations can begin.
-    </div>
     <div class="col1">
+      <p>
+      If no candidate wins a majority of votes in the first round, nearly all votes must be tallied before the redistribution calculations can begin.
+      </p>
       <p>
         To correctly determine how to redistribute votes from eliminated candidates, one must know the order of rankings on each ballot.
         With a small field of candidates, this is not very difficult. But the possible combinations of ballot rankings increases exponentially with more candidates.
