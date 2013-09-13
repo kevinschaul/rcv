@@ -164,7 +164,6 @@
   <div class="clear"></div>
 
 </div>
-<img class="header" src="footer.png" alt="footer" />
 
 <script src="lib/d3.v3.js" type="text/javascript" charset="utf-8"></script>
 <script src="lib/underscore-min.js" type="text/javascript" charset="utf-8"></script>
