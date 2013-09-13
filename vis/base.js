@@ -1,4 +1,8 @@
 var r = rcvChart.init('.target-0', data);
+var r1 = rcvChart20.init('.target-2', data20);
+r1.svg.selectAll('.round-label, .guide-wrapper').style('opacity', 0);
+rcvComplexity.init();
+
 var explanation = d3.select('.explanation');
 var controls = d3.select('.controls');
 
@@ -40,7 +44,7 @@ var stages = [
         .transition()
         .ease('linear')
         .duration(1000)
-        .style('top', 330);
+        .style('top', 350);
     },
     function() {
       isTransitioning = true;
@@ -54,7 +58,7 @@ var stages = [
         .transition()
         .ease('linear')
         .duration(1000)
-        .style('top', 200);
+        .style('top', 170);
     }
   ], [
     function() {
@@ -104,7 +108,7 @@ var stages = [
         .transition()
         .ease('linear')
         .duration(1000)
-        .style('top', 510);
+        .style('top', 530);
     },
     function() {
       isTransitioning = true;
@@ -153,6 +157,101 @@ var stages = [
         .style('stroke-opacity', 0.5);
       r.svg.select('.guide-wrapper-round-2.guide-wrapper-candidate-2 .guide')
         .style('stroke', '#999');
+    }
+  ], [
+    function() {
+      isTransitioning = true;
+      d3.select('.chart')
+        .transition()
+        .duration(1000)
+          .style('opacity', 0)
+          .each('end', function() {
+            d3.select('.chart')
+              .style('display', 'none')
+
+            d3.select('.chart20')
+              .style('display', 'block')
+              .transition()
+              .duration(1000)
+                .style('opacity', 1)
+                .each('end', function() {
+                  isTransitioning = false;
+                })
+
+            r1.svg.selectAll('.round-label-round-0, .guide-wrapper-round-0')
+              .transition()
+              .style('opacity', 1)
+          })
+
+      controls
+        .transition()
+        .ease('linear')
+        .duration(1000)
+        .style('top', 80);
+      explanation.text('Ranked choice voting is relatively simple with only four candidates. Let\'s see what happens with 20.')
+    },
+    function() {
+      // TODO
+    }
+  ], [
+    function() {
+     isTransitioning = true;
+     r1.drawRoundChart(0, function() {
+        r1.drawRoundAnnotations(1)
+        d3.selectAll('.candidate-20-4, .candidate-20-6, .candidate-20-7, .candidate-20-10, .candidate-20-13, .candidate-20-15, .candidate-20-18, .candidate-20-19')
+          .classed('candidate-eliminated', true);
+        r1.drawRoundBetween(0, false, function() {
+          r1.drawRoundAnnotations(2)
+          r1.drawRoundChart(1, function() {
+            d3.selectAll('.candidate-20-8, .candidate-20-11, .candidate-20-14, .candidate-20-20')
+              .classed('candidate-eliminated', true);
+            r1.drawRoundBetween(1, false, function() {
+              r1.drawRoundAnnotations(3)
+              r1.drawRoundChart(2, function() {
+                d3.selectAll('.candidate-20-1, .candidate-20-16')
+                  .classed('candidate-eliminated', true);
+                r1.drawRoundBetween(2, false, function() {
+                  r1.drawRoundAnnotations(4)
+                  r1.drawRoundChart(3, function() {
+                    d3.selectAll('.candidate-20-3, .candidate-20-5, .candidate-20-12')
+                      .classed('candidate-eliminated', true);
+                    r1.drawRoundBetween(3, false, function() {
+                      r1.drawRoundAnnotations(5)
+                      r1.drawRoundChart(4, function() {
+                        d3.selectAll('.candidate-20-9')
+                          .classed('candidate-eliminated', true);
+                        r1.drawRoundBetween(4, false, function() {
+                          r1.drawRoundAnnotations(6)
+                          r1.drawRoundChart(5, function() {
+                            d3.selectAll('.candidate-20-2')
+                              .classed('candidate-eliminated', true);
+                            r1.drawRoundBetween(5, function() {
+                              isTransitioning = false;
+                            });
+                          });
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+      controls
+        .transition()
+        .ease('linear')
+        .duration(1000)
+        .style('top', 570);
+    },
+    function() {
+      r1 = rcvChart20.init();
+      controls
+        .transition()
+        .ease('linear')
+        .duration(1000)
+        .style('top', 80);
     }
   ]
 ];
@@ -212,8 +311,4 @@ btnNext.on('click', function() {
 });
 
 setStage(0);
-
-rcvComplexity.init();
-
-var r1 = rcvChart20.init('.target-2', data20);
 

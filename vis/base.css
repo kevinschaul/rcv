@@ -119,13 +119,23 @@ body {
 
 .chart-wrapper {
   position: relative;
-  height: 580px;
-  margin-bottom: 50px;
+  height: 630px;
+}
+
+.chart {
+  position: absolute;
+  top: 0px;
+}
+.chart20 {
+  position: absolute;
+  top: 0px;
+  display: none;
+  opacity: 0;
 }
 
 .controls {
   position: absolute;
-  top: 200px;
+  top: 170px;
   left: 0px;
 }
 
