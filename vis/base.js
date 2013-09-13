@@ -47,7 +47,7 @@ var stages = [
         .transition()
         .ease('linear')
         .duration(1000)
-        .style('top', 350);
+        .style('top', '380px');
     },
     function() {
       isTransitioning = true;
@@ -61,7 +61,7 @@ var stages = [
         .transition()
         .ease('linear')
         .duration(1000)
-        .style('top', 170);
+        .style('top', '200px');
     }
   ], [
     function() {
@@ -111,7 +111,7 @@ var stages = [
         .transition()
         .ease('linear')
         .duration(1000)
-        .style('top', 530);
+        .style('top', '560px');
     },
     function() {
       isTransitioning = true;
@@ -125,7 +125,7 @@ var stages = [
         .transition()
         .ease('linear')
         .duration(1000)
-        .style('top', 350);
+        .style('top', '380px');
     }
   ], [
     function() {
@@ -186,11 +186,15 @@ var stages = [
               .style('opacity', 1)
           })
 
+      $('html, body').animate({
+        scrollTop: $('#view1').offset().top - 15
+      }, 1000);
+
       controls
         .transition()
         .ease('linear')
         .duration(1000)
-        .style('top', 80);
+        .style('top', '110px');
       explanation.text('Ranked choice voting is relatively simple with only four candidates. Let\'s see what happens with 20.')
     },
     function() {
@@ -217,7 +221,7 @@ var stages = [
         .transition()
         .ease('linear')
         .duration(1000)
-        .style('top', 530);
+        .style('top', '560px');
     }
   ], [
     function() {
@@ -227,7 +231,7 @@ var stages = [
         .transition()
         .ease('linear')
         .duration(1000)
-        .style('top', 570);
+        .style('top', '570px');
 
      r1.drawRoundChart(0, function() {
         r1.drawRoundAnnotations(1)
