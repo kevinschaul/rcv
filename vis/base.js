@@ -34,7 +34,7 @@ var stages = [
     function() {
       isTransitioning = true;
       $('html, body').animate({
-        scrollTop: $('#view1').offset().top - 15
+        scrollTop: $('#view1').offset().top
       }, 1000);
       r.drawRoundAnnotations(1);
       r.drawRoundBetween(0, true, function() {
@@ -187,7 +187,7 @@ var stages = [
           })
 
       $('html, body').animate({
-        scrollTop: $('#view1').offset().top - 15
+        scrollTop: $('#view1').offset().top
       }, 1000);
 
       controls
