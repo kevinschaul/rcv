@@ -21,7 +21,7 @@ var stages = [
       r.drawRoundChart(0, function() {
         isTransitioning = false;
       });
-      explanation.text('Voters mark their first, second and third choice candidates on their ballots. If any candidate wins a majority of first choice votes, he or she is the winner.');
+      explanation.text('If any candidate wins a majority of first choice votes, he or she is the winner. Candidate A came close, but did not reach the threshold.');
     },
     function() {
       isTransitioning = true;
@@ -42,7 +42,7 @@ var stages = [
           .classed('candidate-eliminated', true);
         isTransitioning = false;
       });
-      explanation.text('Since no candidate reached the threshold, we continue to Round 2. The candidate with the least votes is eliminated.');
+      explanation.text('Since no candidate won a majority, we continue to Round 2. The candidate with the least votes is eliminated.');
       controls
         .transition()
         .ease('linear')
@@ -87,7 +87,7 @@ var stages = [
     function() {
       r.svg.select('.vote-line-round-0.vote-line-from-1-to-3')
         .classed('vote-line-active', true);
-      explanation.text('For example, if Joe voted first choice for Candidate B and second choice for Candidate D, his vote would have moved to Candidate D.');
+      explanation.text('For example, if a voter selected Candidate B as her first choice and Candidate D as her second, her vote would have moved to Candidate D.');
     },
     function() {
       r.svg.select('.vote-line-round-0.vote-line-from-1-to-3')
@@ -259,7 +259,7 @@ var stages = [
                             d3.selectAll('.candidate-20-2')
                               .classed('candidate-eliminated', true);
                             isTransitioning = false;
-                            explanation.text('There will be 35 candidates on this year\s Minneapolis mayoral ballot, meaning the results will likely be even more complex than this.')
+                            explanation.text('There will be 35 candidates on this year\'s Minneapolis mayoral ballot, meaning the results will likely be even more complex.')
                           });
                         });
                       });
