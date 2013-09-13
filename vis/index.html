@@ -1,5 +1,7 @@
 <?php readfile('http://www.startribune.com/templates/vh?vid=223669441&sosp=/politics'); ?>
 
+<link rel="stylesheet" href="base.css" />
+
 <div class="graphic">
 
   <div class="introHed">How ranked choice voting works</div>
