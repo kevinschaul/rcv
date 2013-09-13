@@ -441,7 +441,6 @@ var rcvChart20 = {
   },
 
   mouseover: function(d) {
-    console.log(d);
   },
 
   getFreshCumulativeVotes: function() {

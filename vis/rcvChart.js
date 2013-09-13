@@ -459,7 +459,6 @@ var rcvChart = {
   },
 
   mouseover: function(d) {
-    console.log(d);
     d3.select(this)
       .classed('vote-line-active', true);
   },
