@@ -1,6 +1,29 @@
 <?php readfile('http://www.startribune.com/templates/vh?vid=223669441&sosp=/politics'); ?>
 
 <link rel="stylesheet" href="http://webdev0.startribune.com/huttj/visStyle.css" />
+<style>
+.fallback {
+  display: none;
+  width: 750px;
+  padding: 10px 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-align: center;
+  background-color: #AAC2AF;
+  margin: 40px auto;
+}
+</style>
+<!--[if ie]>
+<style>
+.fallback {
+  display: block !important;
+}
+.target-0,
+.controls {
+  display: none;
+}
+</style>
+<![endif]-->
 
 <div class="graphic">
 
@@ -22,6 +45,8 @@
     <div class="globber">The candidate with the fewest votes is eliminated, with his or her votes redistributed based on voters' second and third choices.</div>
     <div class="globber">This process continues until a candidate reaches more than 50 percent of the votes, or until only one candidate remains.</div>
     <div class="globber">A walkthrough of the process is below.</div>
+
+    <div class="fallback">This graphic is not available in Interactive Explorer.</div>
 
     <div class="clear"></div>
   </div>
@@ -61,6 +86,7 @@
           <div class="clear"></div>
         </div>
         <div class="target-0"></div>
+        <img class="fallback" src="fallback-1.png" alt="fallback" />
       </div>
 
       <div class="chart20">
