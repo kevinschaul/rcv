@@ -4,6 +4,8 @@
 <style>
 .fallback {
   display: none;
+}
+.fallback-info {
   width: 750px;
   padding: 10px 20px;
   font-family: Arial, sans-serif;
@@ -13,12 +15,13 @@
   margin: 40px auto;
 }
 </style>
-<!--[if ie]>
+<!--[if lte IE 8]>
 <style>
 .fallback {
   display: block !important;
 }
 .target-0,
+.target-1,
 .controls {
   display: none;
 }
@@ -46,7 +49,7 @@
     <div class="globber">This process continues until a candidate reaches more than 50 percent of the votes, or until only one candidate remains.</div>
     <div class="globber">A walkthrough of the process is below.</div>
 
-    <div class="fallback">This graphic is not available in Interactive Explorer.</div>
+    <div class="fallback fallback-info">This graphic is not available in Interactive Explorer.</div>
 
     <div class="clear"></div>
   </div>
@@ -154,6 +157,7 @@
           <div class="clear"></div>
         </div>
         <div class="target-2"></div>
+        <img class="fallback" src="fallback-2.png" alt="fallback" />
       </div>
 
       <div class="controls">
