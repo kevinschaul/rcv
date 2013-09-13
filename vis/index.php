@@ -26,7 +26,7 @@
     <div class="clear"></div>
   </div>
 
-  <div class="navRule"><span aria-hidden="true" class="icon-arrow-down"></span></div>
+  <div class="navRule" data-view="1"><span aria-hidden="true" class="icon-arrow-down"></span></div>
 
   <div id="view1">
     <div class="labelHed">Votes transfer between candidates</div>
@@ -140,28 +140,30 @@
   </div>
 
 
-<div class="navRule"><span aria-hidden="true" class="icon-arrow-down"></span></div>
+<div class="navRule" data-view="2"><span aria-hidden="true" class="icon-arrow-down"></span></div>
 
-  <div class="labelHed">Tallying votes is no easy task</div>
-  <div class="globber">
-    If no candidate wins a majority of votes in the first round, nearly all votes must be tallied before the redistribution calculations can begin.
+  <div id="view2">
+    <div class="labelHed">Tallying votes is no easy task</div>
+    <div class="globber">
+      If no candidate wins a majority of votes in the first round, nearly all votes must be tallied before the redistribution calculations can begin.
+    </div>
+    <div class="col1">
+      <p>
+        To correctly determine how to redistribute votes from eliminated candidates, one must know the order of rankings on each ballot.
+        With a small field of candidates, this is not very difficult. But the possible combinations of ballot rankings increases exponentially with more candidates.
+      </p>
+      <p>
+        In the 2013 Minneapolis mayoral election, there will be 35 candidates on the ballot. Without considering a single write-in, this means there are 39,270 possible rankings.
+      </p>
+      <p>
+        If no candidate wins an outright majority in this year's mayoral election, we may not know the result for a week or longer.
+      </p>
+    </div>
+    <div class="col2">
+      <div class="target-1"></div>
+    </div>
+    <div class="clear"></div>
   </div>
-  <div class="col1">
-    <p>
-      To correctly determine how to redistribute votes from eliminated candidates, one must know the order of rankings on each ballot.
-      With a small field of candidates, this is not very difficult. But the possible combinations of ballot rankings increases exponentially with more candidates.
-    </p>
-    <p>
-      In the 2013 Minneapolis mayoral election, there will be 35 candidates on the ballot. Without considering a single write-in, this means there are 39,270 possible rankings.
-    </p>
-    <p>
-      If no candidate wins an outright majority in this year's mayoral election, we may not know the result for a week or longer.
-    </p>
-  </div>
-  <div class="col2">
-    <div class="target-1"></div>
-  </div>
-  <div class="clear"></div>
 
 </div>
 

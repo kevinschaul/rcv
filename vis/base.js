@@ -381,5 +381,11 @@ document.onkeyup = function(e) {
   }
 }
 
+d3.selectAll('.navRule').on('click', function() {
+  var view = d3.select(this).attr('data-view');
+  $('html, body').animate({
+    scrollTop: $('#view' + view).offset().top - 15
+  }, 1000);
+});
 setStage(0);
 
