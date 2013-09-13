@@ -156,7 +156,7 @@
         In the 2013 Minneapolis mayoral election, there will be 35 candidates on the ballot. Without considering a single write-in, this means there are 39,270 possible rankings.
       </p>
       <p>
-        If no candidate wins an outright majority in this year's mayoral election, we may not know the result for a week or longer.
+        If no candidate wins an outright majority in this year's mayoral election, we may not know the result for days.
       </p>
     </div>
     <div class="col2">
