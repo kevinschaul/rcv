@@ -30,7 +30,7 @@
 
 <div class="graphic">
 
-  <div class="introHed">How ranked choice voting works</div>
+  <div class="introHed">How ranked-choice voting works</div>
 
   </div>
 

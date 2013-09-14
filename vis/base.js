@@ -195,7 +195,7 @@ var stages = [
         .ease('linear')
         .duration(1000)
         .style('top', '110px');
-      explanation.html('Ranked choice voting is relatively simple with only four candidates. Let&rsquo;s see what happens with 20.')
+      explanation.html('Ranked-choice voting is relatively simple with only four candidates. Let&rsquo;s see what happens with 20.')
     },
     function() {
       isTransitioning = true;
