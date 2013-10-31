@@ -196,7 +196,8 @@ performed by hand, so this complexity may still be a factor.
       </p>
       <p>
 If such tallying is required (by computer or by hand), the city of Minneapolis 
-will announce the winner in the days following the election.
+won't announce the winners of ranked-choice races until the day after the election 
+&mdash; at the earliest.
       </p>
     </div>
     <div class="col2">
