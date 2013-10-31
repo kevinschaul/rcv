@@ -172,20 +172,31 @@
 <div class="navRule" data-view="2"><span aria-hidden="true" class="icon-arrow-down"></span></div>
 
   <div id="view2">
-    <div class="labelHed">Tallying votes is no easy task</div>
+    <div class="labelHed">Tallying votes can be tricky</div>
     <div class="col1">
       <p>
-      If no candidate wins a majority of votes in the first round, nearly all votes must be tallied before the redistribution calculations can begin.
+If no candidate wins a majority of votes in the first round, all votes must be 
+tallied before a winner can be declared.
       </p>
       <p>
-        To correctly determine how to redistribute votes from eliminated candidates, one must know the order of rankings on each ballot.
-        With a small field of candidates, this is not very difficult. But the possible combinations of ballot rankings increases exponentially with more candidates.
+To correctly determine how to redistribute votes from eliminated candidates, 
+one must know the order of rankings on each ballot.
+With a small field of candidates, this is not very difficult. But the possible 
+combinations of ballot rankings increases exponentially with more candidates.
       </p>
       <p>
-        In the 2013 Minneapolis mayoral election, there will be 35 candidates on the ballot. Without considering a single write-in, this means there are 39,270 possible rankings.
+In the 2013 Minneapolis mayoral election, there will be 35 candidates on the 
+ballot. Without considering a single write-in, this means there are 39,270 
+possible rankings.
       </p>
       <p>
-        If no candidate wins an outright majority in this year&rsquo;s mayoral election, we may not know the result for days.
+The city of Minneapolis will use an electronic system to determine the winner, 
+so such calculations will take little time. But by law, recounts must be 
+performed by hand, so this complexity may still be a factor.
+      </p>
+      <p>
+If such tallying is required (by computer or by hand), the city of Minneapolis 
+will announce the winner in the days following the election.
       </p>
     </div>
     <div class="col2">
